@@ -24,3 +24,15 @@ class Tes(object):
         self.upper_win_width = upper_win_width
         self.win_steps = win_steps
         self.num_wins = num_wins
+
+    def find_temperature(self, emissivity):
+        """
+        """
+
+        pass
+
+    def _calc_smoothness(self, emissivity):
+        """
+        """
+
+        pass
