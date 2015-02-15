@@ -37,18 +37,9 @@ class DpMeasurement(object):
         else:
             self.dwr = None
 
-    def read_measurement(self):
-        """Read in the data for a measurement from the specified files.
-        """
+        self._calibrate_measurement()
 
-        self.cbb._read_file()
-        self.wbb._read_file()
-        self.sam._read_file()
-
-        if (not self.dwr==None):
-            self.dwr._read_file()
-
-    def calibrate_measurement(self):
+    def _calibrate_measurement(self):
         """Calibrate the data for a measurement.
         """
 
@@ -65,12 +56,12 @@ class DpMeasurement(object):
         calibration_offset = warm_blackbody - (self.wbb.data.average_spectrum * 
                 calibration_slope)
 
-        self.wbb._calibrate_file(calibration_slope, calibration_offset)
-        self.cbb._calibrate_file(calibration_slope, calibration_offset)
-        self.sam._calibrate_file(calibration_slope, calibration_offset)
+        self.wbb.calibrate_file(calibration_slope, calibration_offset)
+        self.cbb.calibrate_file(calibration_slope, calibration_offset)
+        self.sam.calibrate_file(calibration_slope, calibration_offset)
 
         if not self.dwr is None:
-            self.dwr._calibrate_file(calibration_slope, calibration_offset)
+            self.dwr.calibrate_file(calibration_slope, calibration_offset)
 
             # plate stuff
             plate_temperature = self.dwr.header.spare_f[0]
@@ -90,12 +81,12 @@ class DpMeasurement(object):
 
         errors = []
         
-        errors.append(self.wbb._check_file(lower_wave, upper_wave))
-        errors.append(self.cbb._check_file(lower_wave, upper_wave))
-        errors.append(self.sam._check_file(lower_wave, upper_wave))
+        errors.append(self.wbb.check_file(lower_wave, upper_wave))
+        errors.append(self.cbb.check_file(lower_wave, upper_wave))
+        errors.append(self.sam.check_file(lower_wave, upper_wave))
 
         if not self.dwr is None:
-            errors.append(self.dwr._check_file(lower_wave, upper_wave))
+            errors.append(self.dwr.check_file(lower_wave, upper_wave))
 
         errors = np.array(errors)
 

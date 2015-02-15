@@ -29,7 +29,9 @@ class DpData(object):
         individual_wavelength - 
     """
 
-    def __init__(self, interferogram_size,
+    def __init__(self, open_file,
+                       model,
+                       interferogram_size,
                        number_of_coadds,
                        spectrum_size,
                        laser_wavelength_micron,
@@ -38,13 +40,6 @@ class DpData(object):
         """DpData instance constructor.
         """
 
-        self._interferogram_size = interferogram_size
-        self._number_of_coadds = number_of_coadds
-        self._spectrum_size = spectrum_size
-        self._dispersion_constant_xm = dispersion_constant_xm
-        self._dispersion_constant_xb = dispersion_constant_xb
-        self._largest_wavenumber = 10000.0 / (2.0 * laser_wavelength_micron)
-
         self.interferogram = []
         self.frequency = None
         self.spectrum = []
@@ -52,7 +47,16 @@ class DpData(object):
         self.average_spectrum = []
         self.individual_wavelength = None
 
-    def read_data(self, open_file, model):
+        self._interferogram_size = interferogram_size
+        self._number_of_coadds = number_of_coadds
+        self._spectrum_size = spectrum_size
+        self._dispersion_constant_xm = dispersion_constant_xm
+        self._dispersion_constant_xb = dispersion_constant_xb
+        self._largest_wavenumber = 10000.0 / (2.0 * laser_wavelength_micron)
+
+        self._read_data(open_file, model)
+
+    def _read_data(self, open_file, model):
         """Read the radiometric data.
 
         Args:
@@ -70,9 +74,6 @@ class DpData(object):
 
     def _read_new_data(self, open_file):
         """Private helper method to read data output in the "new" format.
-
-        Args:
-            open_file - The currently open data file.
         """
 
         for i in range(self._number_of_coadds):
@@ -89,6 +90,7 @@ class DpData(object):
         Args:
             open_file - The currently open data file.
         """
+
         
         scan_number = 0
 

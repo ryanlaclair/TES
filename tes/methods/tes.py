@@ -1,6 +1,8 @@
 """
 """
 
+import numpy as np
+
 class Tes(object):
     """
     """
@@ -22,18 +24,18 @@ class Tes(object):
         self.windows = np.linspace(lower_win_width, upper_win_width, win_steps)
         self.num_wins = num_wins
 
-    def find_temperature(self, emissivity):
+    def find_temperature(self, measurement):
         """
         """
 
-        sam_radiance = emissivity.measurement.sam.data.spectrum
+        sam_radiance = measurement.sam.data.spectrum
 
         if emissivity.measurement.dwr is None:
             dwr_radiance = np.zeros(len(sam_radiance))
         else:
-            dwr_radiance = emissivity.measurement.dwr.data.spectrum
+            dwr_radiance = measurement.dwr.data.spectrum
 
-        wavelength = emissivity.measurement.sam.data.wavelength
+        wavelength = measurement.sam.data.wavelength
 
         index = np.argsort(wavelength)
         wavelength = wavelength[index]
@@ -46,10 +48,15 @@ class Tes(object):
         sam_radiance = sam_radiance[lower_index:upper_index]
         dwr_radiance = dwr_radiance[lower_index:upper_index]
 
-        for width in self.windows:
-            pass
+        window_data = []
 
-    def _test_window(self, emissivity, width, wavelength):
+        for width in self.windows:
+            window_data.append(self._test_window(width, wavelength, 
+                sam_radiance, dwr_radiance))
+
+        return window_data
+
+    def _test_window(self, width, wavelength, sam_radiance, dwr_radiance):
         """
         """
 
@@ -57,41 +64,32 @@ class Tes(object):
 
         lower_val = self.lower_wave
 
+        emissivities = []
+
         for lower_win in range(steps):
             upper_win = np.argmin(abs(wavelength - (lower_val + width))) + 1
             lower_val = wavelength[lower_win+1]
 
-            win_assd = np.zeros(len(self.temps))
+            min_assd = np.inf
+
+            min_guess = None
 
             for temp in range(len(self.temps)):
-                bb = 
+                self.emissivity.lower_win = lower_win
+                self.emissivity.upper_win = upper_win
 
-    def _deriv(self, y, x=None):
-        """
-        """
+                guess = Emissivity(self.temps[temp], 
+                    wavelength[lower_win:upper_win],
+                    sam_radiance[lower_win:upper_win],
+                    dwr_radiance[lower_win:upper_win])
 
-        n = len(y)
+                if np.isnan(guess.assd):
+                    guess.assd = np.inf
+                
+                if guess.assd < assd:
+                    min_guess = guess
+                    min_assd = min_guess.assd
+            
+            emissivities.append(min_guess)
 
-        if not x is None:
-
-            n2 = n - 2
-
-            y12 = y - np.roll(y, -1)
-            y01 = np.roll(y, 1) - y
-            y02 = np.roll(y, 1) - np.roll(y, -1)
-
-            d = (np.roll(x, 1) * (y12 / (y01*y02)) + x * (1/y12 - 1/y01) -
-                np.roll(x, -1) * (y01 / (y02 * y12)))
-            d[0] = (x[0] * (y01[1] + y02[1]) / (y01[1] * y01[1]) - x[1] * y02[1] /
-                (y01[1] * y12[1]) + x[2] * y01[1] / (y02[1] * y12[1]))
-            d[-1] = (-x[n-3] * y12[n2] / (y01[n2] * y02[n2]) + x[n-2] * y02[n2] /
-                (y01[n2] * y12[n2]) - x[n-1] * (y02[n2] + y12[n2]) /
-                (y02[n2] * y12[n2]))
-
-        else:
-
-            d = (np.roll(y, -1) - np.roll(y, 1)) / 2
-            d[0] = (-3 * y[0] + 4 * y[1] - y[2]) / 2
-            d[n-1] = (3 * y[n-1] - 4 * y[n-2] + y[n-3]) / 2
-
-        return d
+        return emissivities

@@ -16,7 +16,7 @@ class DpHeader(object):
         Instance variables to hold each piece of header information.
     """
 
-    def __init__(self):
+    def __init__(self, raw, model):
         """DpHeader instance constructor.
         """
 
@@ -75,7 +75,9 @@ class DpHeader(object):
         self.spare_ne = ''
         self.header_end = ''
 
-    def read_header(self, raw, model):
+        self._read_header(raw, model)
+
+    def _read_header(self, raw, model):
         """Read the header.
 
         Args:

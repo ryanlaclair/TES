@@ -27,8 +27,10 @@ class DpFile(object):
         """
 
         self.file_name = file_name
-        self.header = DpHeader()
+        self.header = None
         self.data = None
+
+        self._read_file()
 
     def _read_file(self):
         """Read the data file.
@@ -58,20 +60,20 @@ class DpFile(object):
             raw = open_file.read(1224)
             model = '102new'
 
-        self.header.read_header(raw, model)
+        self.header = DpHeader(raw, model)
 
-        self.data = DpData(self.header.interferogram_size, 
+        self.data = DpData(open_file, 
+                model, 
+                self.header.interferogram_size, 
                 self.header.number_of_coadds, 
                 2048*self.header.zero_fill,
                 self.header.laser_wavelength_microns, 
                 self.header.dispersion_constant_xm,
                 self.header.dispersion_constant_xb)
 
-        self.data.read_data(open_file, model)
-
         open_file.close()
 
-    def _calibrate_file(self, calibration_slope, calibration_offset):
+    def calibrate_file(self, calibration_slope, calibration_offset):
         """
         """
         
@@ -119,7 +121,7 @@ class DpFile(object):
 
             self.data.spectrum.append(spectrum)
 
-    def _check_file(self, lower_wave, upper_wave):
+    def check_file(self, lower_wave, upper_wave):
         """
         """
 
