@@ -11,7 +11,7 @@ import numpy as np
 from dp_file import DpFile
 from dp_header import DpHeader
 from dp_data import DpData
-from ..misc import bb_radiance
+from ..utils.bb_radiance import bb_radiance
 
 class DpMeasurement(object):
     """A class that holds the information relavent to a complete measurement
@@ -57,12 +57,12 @@ class DpMeasurement(object):
         warm_blackbody = bb_radiance(self.wbb.header.wbb_temperature + 273.15,
                 self.wbb.data.wavelength)
 
-        self.wbb.data.spectrum[0] = 1
-        self.wbb.data.spectrum[2047] = 1
+        self.wbb.data.average_spectrum[0] = 1
+        self.wbb.data.average_spectrum[2047] = 1
 
         calibration_slope = ((warm_blackbody - cold_blackbody) /
-                (self.wbb.data.spectrum - self.cbb.data.spectrum))
-        calibration_offset = warm_blackbody - (self.wbb.data.spectrum * 
+                (self.wbb.data.average_spectrum - self.cbb.data.average_spectrum))
+        calibration_offset = warm_blackbody - (self.wbb.data.average_spectrum * 
                 calibration_slope)
 
         self.wbb._calibrate_file(calibration_slope, calibration_offset)
@@ -84,7 +84,7 @@ class DpMeasurement(object):
             self.dwr.data.spectrum = ((self.dwr.data.spectrum - plate_emission) /
                     (1 - plate_emissivity))
 
-    def check_consistancy(self, lower_wave, upper_wave, tolerance):
+    def check_consistency(self, lower_wave, upper_wave, tolerance):
         """
         """
 

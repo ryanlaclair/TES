@@ -92,6 +92,7 @@ class DpFile(object):
 
         index = np.argsort(individual_wavelength)
         individual_wavelength = individual_wavelength[index]
+        self.data.individual_wavelength = individual_wavelength
         average_spectrum = self.data.average_spectrum[index]
 
         i_min = np.argmin(abs(individual_wavelength - 8.0))
@@ -116,24 +117,24 @@ class DpFile(object):
                     ) + individual_offset
             spectrum = spectrum[index]
 
-            self.data.spectrum[i] = spectrum
+            self.data.spectrum.append(spectrum)
 
     def _check_file(self, lower_wave, upper_wave):
         """
         """
 
-        i_min = np.argmin(abs(individual_wavelength - lower_wave))
-        i_max = np.argmin(abs(individual_wavelength - upper_wave))
+        i_min = np.argmin(abs(self.data.individual_wavelength - lower_wave))
+        i_max = np.argmin(abs(self.data.individual_wavelength - upper_wave))
 
         areas = []
 
         for i in range(0, self.header.number_of_coadds):
-            spectrum = self.data.spectrum[index]
+            spectrum = self.data.spectrum[i]
 
             normalized_spectrum = spectrum / self.data.average_spectrum
 
             area = np.trapz(normalized_spectrum[i_min:i_max], 
-                    ind_wavelength[i_min:i_max])
+                    self.data.individual_wavelength[i_min:i_max])
             areas.append(area)
 
         areas = np.array(areas)
