@@ -20,6 +20,11 @@ class DpData(object):
         dispersion_constant_xm -
         dispersion_constant_xb -
         largest_wavenumber - The upper wavenumber limit.
+        interferogram -
+        frequency -
+        spectrum -
+        wavelength - 
+        average_spectrum -
     """
 
     def __init__(self, interferogram_size,
@@ -42,6 +47,7 @@ class DpData(object):
         self.frequency = None
         self.spectrum = []
         self.wavelength = None
+        self.average_spectrum = []
 
     def read_data(self, open_file, model):
         """Read the radiometric data.
@@ -71,7 +77,8 @@ class DpData(object):
                     count=self.interferogram_size)
             self.interferogram.append(i_value)
 
-        self.spectrum = np.fromfile(open_file, dtype='f', count=self.spectrum_size)
+        self.average_spectrum = np.fromfile(open_file, dtype='f', 
+                count=self.spectrum_size)
 
     def _read_old_data(self, open_file):
         """Private helper method to read data output in the "old" format.
@@ -89,7 +96,8 @@ class DpData(object):
             self.interferogram.append(i_value)
 
         scan_number = np.fromfile(open_file, dtype='<i2', count=1)
-        self.spectrum = np.fromfile(open_file, dtype='<f', count=self.spectrum_size)
+        self.average_spectrum = np.fromfile(open_file, dtype='<f', 
+                count=self.spectrum_size)
 
     def _calc_frequency(self):
         """Private helper method to calculate the frequency values.

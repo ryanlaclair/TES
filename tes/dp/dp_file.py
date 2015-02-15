@@ -8,6 +8,7 @@ Adapted from code written by Carl Salvaggio <salvaggio@cis.rit.edu>.
 
 import struct
 import numpy as np
+
 from dp_header import DpHeader
 from dp_data import DpData
 
@@ -29,7 +30,7 @@ class DpFile(object):
         self.header = DpHeader()
         self.data = None
 
-    def read_file(self):
+    def _read_file(self):
         """Read the data file.
         """
 
@@ -70,12 +71,12 @@ class DpFile(object):
 
         open_file.close()
 
-    def calibrate_file(self, calibration_slope, calibration_offset):
+    def _calibrate_file(self, calibration_slope, calibration_offset):
         """
         """
         
-        self.data.spectrum = (calibration_slope * self.data.spectrum +
-                calibration_offset)
+        self.data.average_spectrum = (calibration_slope * self.data.average_spectrum 
+                + calibration_offset)
 
         individual_wavelength = np.zeros(2048)
         individual_slope = np.zeros(2048)
@@ -91,12 +92,10 @@ class DpFile(object):
 
         index = np.argsort(individual_wavelength)
         individual_wavelength = individual_wavelength[index]
-        average_spectrum = self.data.spectrum[index]
+        average_spectrum = self.data.average_spectrum[index]
 
         i_min = np.argmin(abs(individual_wavelength - 8.0))
         i_max = np.argmin(abs(individual_wavelength - 14.0))
-
-        areas = []
 
         for i in range(self.header.number_of_coadds):
             i_center_burst = np.argmax(np.absolute(self.data.interferogram[i]))
@@ -117,4 +116,26 @@ class DpFile(object):
                     ) + individual_offset
             spectrum = spectrum[index]
 
-            self.data.spectrum = spectrum
+            self.data.spectrum[i] = spectrum
+
+    def _check_file(self, lower_wave, upper_wave):
+        """
+        """
+
+        i_min = np.argmin(abs(individual_wavelength - lower_wave))
+        i_max = np.argmin(abs(individual_wavelength - upper_wave))
+
+        areas = []
+
+        for i in range(0, self.header.number_of_coadds):
+            spectrum = self.data.spectrum[index]
+
+            normalized_spectrum = spectrum / self.data.average_spectrum
+
+            area = np.trapz(normalized_spectrum[i_min:i_max], 
+                    ind_wavelength[i_min:i_max])
+            areas.append(area)
+
+        areas = np.array(areas)
+
+        return areas.min()/areas.max()

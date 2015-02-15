@@ -7,10 +7,11 @@ Adapted from code written by Carl Salvaggio <salvaggio@cis.rit.edu>.
 """
 
 import numpy as np
+
 from dp_file import DpFile
 from dp_header import DpHeader
 from dp_data import DpData
-from bb_radiance import bb_radiance
+from ..misc import bb_radiance
 
 class DpMeasurement(object):
     """A class that holds the information relavent to a complete measurement
@@ -40,12 +41,12 @@ class DpMeasurement(object):
         """Read in the data for a measurement from the specified files.
         """
 
-        self.cbb.read_file()
-        self.wbb.read_file()
-        self.sam.read_file()
+        self.cbb._read_file()
+        self.wbb._read_file()
+        self.sam._read_file()
 
         if (not self.dwr==None):
-            self.dwr.read_file()
+            self.dwr._read_file()
 
     def calibrate_measurement(self):
         """Calibrate the data for a measurement.
@@ -64,12 +65,12 @@ class DpMeasurement(object):
         calibration_offset = warm_blackbody - (self.wbb.data.spectrum * 
                 calibration_slope)
 
-        self.wbb.calibrate_file(calibration_slope, calibration_offset)
-        self.cbb.calibrate_file(calibration_slope, calibration_offset)
-        self.sam.calibrate_file(calibration_slope, calibration_offset)
+        self.wbb._calibrate_file(calibration_slope, calibration_offset)
+        self.cbb._calibrate_file(calibration_slope, calibration_offset)
+        self.sam._calibrate_file(calibration_slope, calibration_offset)
 
         if not self.dwr is None:
-            self.dwr.calibrate_file(calibration_slope, calibration_offset)
+            self.dwr._calibrate_file(calibration_slope, calibration_offset)
 
             # plate stuff
             plate_temperature = self.dwr.header.spare_f[0]
@@ -82,3 +83,23 @@ class DpMeasurement(object):
             plate_emission = plate_emissivity * plate_blackbody
             self.dwr.data.spectrum = ((self.dwr.data.spectrum - plate_emission) /
                     (1 - plate_emissivity))
+
+    def check_consistancy(self, lower_wave, upper_wave, tolerance):
+        """
+        """
+
+        errors = []
+        
+        errors.append(self.wbb._check_file(lower_wave, upper_wave))
+        errors.append(self.cbb._check_file(lower_wave, upper_wave))
+        errors.append(self.sam._check_file(lower_wave, upper_wave))
+
+        if not self.dwr is None:
+            errors.append(self.dwr._check_file(lower_wave, upper_wave))
+
+        errors = np.array(errors)
+
+        if errors.max() > tolerance:
+            return False
+        else:
+            return True

@@ -12,8 +12,9 @@ class Emissivity(object):
         self.measurement = measurement
         self.temperature = 0
         self.emissivity = None
+        self._metric = 0
 
-    def calc_emissivity(self):
+    def calc_emissivity(self, temps, waves, ):
         """
         """
 
