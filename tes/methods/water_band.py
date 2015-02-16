@@ -1,6 +1,8 @@
 """
 """
 
+from tes import Tes
+
 class WaterBand(Tes):
     """
     """

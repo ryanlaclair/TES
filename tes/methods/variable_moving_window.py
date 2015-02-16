@@ -1,7 +1,11 @@
 """
 """
 
-class WaviableMovingWindow(Tes):
+import numpy as np
+
+from tes import Tes
+
+class VariableMovingWindow(Tes):
     """
     """
 
@@ -23,5 +27,13 @@ class WaviableMovingWindow(Tes):
                            upper_wave,
                            lower_win_width,
                            upper_win_width,
-                           win_stpes,
+                           win_steps,
                            num_wins)
+
+    def find_temperature(self, measurement):
+        """
+        """
+
+        window_data = Tes.find_temperature(self, measurement)
+
+        return min(window_data)

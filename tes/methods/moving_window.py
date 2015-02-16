@@ -1,6 +1,10 @@
 """
 """
 
+import numpy as np
+
+from tes import Tes
+
 class MovingWindow(Tes):
     """
     """
@@ -26,3 +30,11 @@ class MovingWindow(Tes):
                            upper_win_width,
                            win_steps,
                            num_wins)
+
+    def find_temperature(self, measurement):
+        """
+        """
+
+        window_data = Tes.find_temperature(self, measurement)
+
+        return min(window_data)

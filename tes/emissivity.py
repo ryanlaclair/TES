@@ -4,6 +4,7 @@
 import numpy as np
 
 from utils.deriv import deriv
+from utils.bb_radiance import bb_radiance
 
 class Emissivity(object):
     """
@@ -21,8 +22,26 @@ class Emissivity(object):
         self.sam_radiance = sam_radiance
         self.dwr_radiance = dwr_radiance
         
-        self.emissivity = _calc_emissivity()
-        self.assd = _calc_assd()
+        self.emissivity = self._calc_emissivity()
+        self.assd = self._calc_assd()
+
+    def __eq__(self, other):
+        """
+        """
+
+        if isinstance(other, Emissivity):
+            return self.assd == other.assd
+        else:
+            return NotImplemented
+
+    def __lt__(self, other):
+        """
+        """
+
+        if isinstance(other, Emissivity):
+            return self.assd < other.assd
+        else:
+            return NotImplemented
 
     def _calc_emissivity(self):
         """
