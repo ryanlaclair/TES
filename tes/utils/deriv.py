@@ -1,4 +1,7 @@
 """
+File:       deriv.py
+
+Author:     Ryan LaClair <rgl8828@rit.edu>
 """
 
 import numpy as np
@@ -13,7 +16,7 @@ def deriv(y, x=None):
             unit spacing is assumed.
 
     returns:
-        The calculated derivcative.
+        The calculated derivative.
     """
 
     n = len(y)

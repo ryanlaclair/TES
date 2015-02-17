@@ -18,19 +18,27 @@ class DpMeasurement(object):
     taken with a D&P Instruments Model 103F MicroFT or Model 202 TurboFT.
 
     Attributes:
-        wbb - A DpFile instance holding the warm blackbody information.
         cbb - A DpFile instance holding the cold blackbody information.
+        wbb - A DpFile instance holding the warm blackbody information.
         sam - A DpFile instance holding the sample information
         dwr - A DpFile instance holding the downwelling information, or None.
     """
 
-    def __init__(self, cbb_file, wbb_file, sam_file, dwr_file):
+    def __init__(self, cbb_file, wbb_file, sam_file, dwr_file=None, plate=-1):
         """DpMeasurement instance constructor.
+
+        Arguments:
+            cbb_file - The cold blackbody filename.
+            wbb_file - The warm blackbody filename.
+            sam_file - The sample filename.
+            dwr_file - The downwelling filename.
+            plate - The plate emissivity.
         """
 
         self.cbb = DpFile(cbb_file)
         self.wbb = DpFile(wbb_file)
         self.sam = DpFile(sam_file)
+        self.plate = plate
         
         if (not dwr_file==None):
             self.dwr = DpFile(dwr_file)
@@ -63,10 +71,8 @@ class DpMeasurement(object):
         if not self.dwr is None:
             self.dwr.calibrate_file(calibration_slope, calibration_offset)
 
-            # plate stuff
             plate_temperature = self.dwr.header.spare_f[0]
-            plate_emissivity = -1
-            if (plate_emissivity == -1) :
+            if (self.plate == -1) :
                 plate_emissivity = self.dwr.header.spare_f[1]
 
             plate_blackbody = bb_radiance(plate_temperature + 273.15,
@@ -76,7 +82,16 @@ class DpMeasurement(object):
                     (1 - plate_emissivity))
 
     def check_consistency(self, lower_wave, upper_wave, tolerance):
-        """
+        """Check the consistency of the measurement scans.
+
+        Arguments:
+            lower_wave - The lower wavelength limit to use for the check.
+            upper_wave - The upper wavelength limit to use for the check.
+            tolerance - The minimum acceptable consistency tolerance.
+
+        Returns:
+            True if the consistency is greater than the specified minimum allowed
+            tolerance, False otherwise.
         """
 
         errors = []

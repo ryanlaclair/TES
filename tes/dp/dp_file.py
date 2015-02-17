@@ -24,6 +24,9 @@ class DpFile(object):
 
     def __init__(self, file_name):
         """DpFile instance constructor.
+
+        Arguments:
+            file_name - The filename for the data file.
         """
 
         self.file_name = file_name
@@ -74,7 +77,11 @@ class DpFile(object):
         open_file.close()
 
     def calibrate_file(self, calibration_slope, calibration_offset):
-        """
+        """Calibrate the radiance data read from the file.
+
+        Arguments:
+            calibration_slope - The calculated calibration slope.
+            calibration_offset - The calculated calibration offset.
         """
         
         self.data.average_spectrum = (calibration_slope * self.data.average_spectrum 
@@ -122,7 +129,15 @@ class DpFile(object):
             self.data.spectrum.append(spectrum)
 
     def check_file(self, lower_wave, upper_wave):
-        """
+        """Check the consistency across individual scans in the file.
+
+        Arguments:
+            lower_wave - The minimum wavelength in the range to be used.
+            upper_wave - The maximum wavelength in the range to be used.
+
+        Returns:
+            The ratio of the minimum to the maximum area under the normalized
+            radiance curves within the range sepcified.
         """
 
         i_min = np.argmin(abs(self.data.individual_wavelength - lower_wave))

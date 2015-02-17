@@ -13,6 +13,13 @@ class DpData(object):
     D&P Instruments Model 103F MicroFT or Model 202 TurboFT.
 
     Attributes:
+        interferogram - The individual interferogram scans.
+        frequency - The frequencies at which the scans collected data.
+        spectrum - The individual radiance spectra.
+        wavelength - The wavelengths at which the radiances are calculated.
+        average_spectrum -
+        individual_wavelength - 
+
         _interferogram_size - The number of measurements in 1 interferogram
             scan.
         _number_of_coadds - The number of scans taken.
@@ -20,13 +27,6 @@ class DpData(object):
         _dispersion_constant_xm -
         _dispersion_constant_xb -
         _largest_wavenumber - The upper wavenumber limit.
-
-        interferogram -
-        frequency -
-        spectrum -
-        wavelength - 
-        average_spectrum -
-        individual_wavelength - 
     """
 
     def __init__(self, open_file,
@@ -38,6 +38,16 @@ class DpData(object):
                        dispersion_constant_xm,
                        dispersion_constant_xb):
         """DpData instance constructor.
+
+        Arguments:
+            open_file - The open file data.
+            model - The D&P Instruments model used.
+            interferogram_size - The number of elements in an interferogram scan.
+            number_of_coadds - The number of scans in one file.
+            spectrum_size - The number of elements in the spectrum.
+            laser_wavelength_micron - The intrument laser wavelength.
+            dispersion_constant_xm - 
+            dispersion_constant_xb - 
         """
 
         self.interferogram = []
@@ -59,7 +69,7 @@ class DpData(object):
     def _read_data(self, open_file, model):
         """Read the radiometric data.
 
-        Args:
+        Argumentss:
             open_file - The currently open data file.
             model - The D&P Instrument model.
         """
@@ -74,6 +84,9 @@ class DpData(object):
 
     def _read_new_data(self, open_file):
         """Private helper method to read data output in the "new" format.
+
+        Arguments:
+            open_file - The currently open data file.
         """
 
         for i in range(self._number_of_coadds):
@@ -87,7 +100,7 @@ class DpData(object):
     def _read_old_data(self, open_file):
         """Private helper method to read data output in the "old" format.
 
-        Args:
+        Arguments:
             open_file - The currently open data file.
         """
 

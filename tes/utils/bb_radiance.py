@@ -9,7 +9,7 @@ import numpy as np
 def bb_radiance(absolute_temperature, wavelength):
     """Calculate the spectral blackbody radiance.
 
-    Args:
+    Arguments:
         absolute_temperature - Temperature in Kelvin.
         wavelength - Numpy array of wavelengths in microns.
 

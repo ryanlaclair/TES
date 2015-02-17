@@ -1,0 +1,105 @@
+<!--
+Configuration file for temperature emissivity batch processing.
+-->
+
+<config>
+
+    <method name="waterband">
+
+        <variationTolerance>10</variationTolerance>
+
+        <temperatureLimits>
+            <lower>260</lower>
+            <upper>360</upper>
+        </temperatureLimits>
+
+        <wavelengthLimits>
+            <lower>13.55</lower>
+            <upper>13.85</upper>
+        </wavelengthLimits>
+
+    </method>
+
+    <method name="standard">
+
+        <variationTolerance>10</variationTolerance>
+
+        <temperatureLimits>
+            <lower>260</lower>
+            <upper>360</upper>
+        </temperatureLimits>
+
+        <wavelengthLimits>
+            <lower>8.12</lower>
+            <upper>8.6</upper>
+        </wavelengthLimits>
+
+    </method>
+
+    <method name="moving window">
+
+        <variationTolerance>10</variationTolerance>
+
+        <temperatureLimits>
+            <lower>260</lower>
+            <upper>360</upper>
+        </temperatureLimits>
+
+        <wavelengthLimits>
+            <lower>8.0</lower>
+            <upper>14.0</upper>
+        </wavelengthLimits>
+
+        <windowWidth>0.2</windowWidth>
+
+    </method>
+
+    <method name="variable moving window">
+
+        <variationTolerance>10</variationTolerance>
+
+        <temperatureLimits>
+            <lower>260</lower>
+            <upper>360</upper>
+        </temperatureLimits>
+
+        <wavelengthLimits>
+            <lower>8.0</lower>
+            <upper>14.0</upper>
+        </wavelengthLimits>
+
+        <windowWidthLimits>
+            <lower>0.2</lower>
+            <upper>0.8</upper>
+        </windowWidthLimits>
+
+        <windowStep>0.1</windowStep>
+
+    </method>
+
+    <method name="multiple moving window">
+
+        <variationTolerance>10</variationTolerance>
+
+        <temperatureLimits>
+            <lower>260</lower>
+            <upper>360</upper>
+        </temperatureLimits>
+
+        <wavelengthLimits>
+            <lower>8.0</lower>
+            <upper>14.0</upper>
+        </wavelengthLimits>
+
+        <windowWidthLimits>
+            <lower>0.2</lower>
+            <upper>0.6</upper>
+        </windowWidthLimits>
+
+        <windowStep>0.2</windowStep>
+
+        <numWindows>2</numWindows>
+
+    </method>
+
+</config>

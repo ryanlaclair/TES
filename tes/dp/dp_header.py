@@ -18,6 +18,10 @@ class DpHeader(object):
 
     def __init__(self, raw, model):
         """DpHeader instance constructor.
+
+        Arguments:
+            raw - The raw header data.
+            model - The D&P Instruments model.
         """
 
         self.label = ''
@@ -80,7 +84,7 @@ class DpHeader(object):
     def _read_header(self, raw, model):
         """Read the header.
 
-        Args:
+        Arguments:
             raw - The raw header data.
             model - The D&P Instrument model.
         """
@@ -98,7 +102,7 @@ class DpHeader(object):
         """Private helper method to read a header output in the "new"
         format.
 
-        Args:
+        Arguments:
             raw - The raw header data.
         """
 
@@ -353,7 +357,7 @@ class DpHeader(object):
         """Private helper function to read a header output in the "old"
         format.
 
-        Args:
+        Arguments:
             raw - The raw header data.
         """
 
