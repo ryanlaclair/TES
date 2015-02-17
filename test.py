@@ -4,10 +4,10 @@
 import tes
 import time
 
-cbb = '../data/Stephanie/2013_06_04_1435/2013_06_04_1431.cbb'
-wbb = '../data/Stephanie/2013_06_04_1435/2013_06_04_1433.wbb'
-sam = '../data/Stephanie/2013_06_04_1435/2013_06_04_1435.sam'
-dwr = '../data/Stephanie/2013_06_04_1435/2013_06_04_1436.dwr'
+cbb = 'data/2013_06_04_1435/2013_06_04_1431.cbb'
+wbb = 'data/2013_06_04_1435/2013_06_04_1433.wbb'
+sam = 'data/2013_06_04_1435/2013_06_04_1435.sam'
+dwr = 'data/2013_06_04_1435/2013_06_04_1436.dwr'
 
 data = tes.DpMeasurement(cbb, wbb, sam, dwr)
 
