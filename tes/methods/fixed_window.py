@@ -1,5 +1,5 @@
 """
-File:       moving_window.py
+File:       fixed_window.py
 
 Author:     Ryan LaClair <rgl8828@rit.edu>
 """
@@ -8,42 +8,37 @@ import numpy as np
 
 from tes import Tes
 
-class MovingWindow(Tes):
-    """A class that represents a moving window temperature emissivity
-    separation object.
+class FixedWindow(Tes):
+    """A class that represents a standard temperature emissivity separation
+    object.
 
     Attributes:
         Inherited from Tes.
-        lower_wave -
-        upper_wave -
-        window_width - 
+        lower_wave - 
+        upper_wave - 
     """
 
     def __init__(self, lower_temp,
                        upper_temp,
                        lower_wave,
-                       upper_wave,
-                       window_width):
-        """MovingWindow instance constructor.  Calls constructor for super
-        class.
+                       upper_wave):
+        """Standard instance constructor.  Calls constructor for super class.
 
         Arguments:
             lower_temp - The minimum temperature in the range to be tested.
             upper_temp - The maximum temperature in the range to be tested.
-            lower_wave - The minimum wavelength in the range to be tested.
-            upper_wave - The maximum wavelength in the range ot be tested.
-            window_width - The width of the moving window.
+            lower_wave -
+            upper_wave -
         """
 
         self.lower_wave = lower_wave
         self.upper_wave = upper_wave
-        self.window_width = window_width
 
         Tes.__init__(self, lower_temp,
                            upper_temp)
 
     def find_temperature(self, measurement):
-        """Estimate the temperature using moving window method.
+        """Estimate the temperature using the standard method.
 
         Arguments:
             measurement - A DpMeasurement instance holding the data that will
@@ -71,24 +66,10 @@ class MovingWindow(Tes):
 
         Tes.set_data(self, sam_radiance, dwr_radiance, wavelength)
 
-        emissivities = []
+        lower_win = np.argmin(abs(wavelength - self.lower_wave))
+        upper_win = np.argmin(abs(wavelength - self.upper_wave))
 
-        lower_wave = self.lower_wave
-        lower_win = np.argmin(abs(wavelength - lower_wave))
-        upper_win = 0
+        Tes.set_windows(self, [[lower_win, upper_win]])
 
-        upper_limit = np.argmin(abs(wavelength - self.upper_wave))
-
-        while (upper_win < upper_limit):
-            upper_win = np.argmin(abs(wavelength - 
-                (lower_wave + self.window_width)))
-
-            Tes.set_windows(self, [[lower_win, upper_win]])
-
-            # call the super class find_temperature method
-            emissivities.append(Tes.find_temperature(self))
-
-            lower_win += 1
-            lower_wave = wavelength[lower_win]
-
-        return min(emissivities)
+        # call the super class find_temperature method
+        return Tes.find_temperature(self)

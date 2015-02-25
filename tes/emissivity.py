@@ -17,8 +17,7 @@ class Emissivity(object):
         wavelength - An array of wavelength values.
         sam_radiance - The sample radiance values.
         dwr_radiance - The downwelling radiance values.
-        lower_win - The lower index for the smoothness window.
-        upper_win - The upper index for the smoothness window.
+        window_indices - 
         emissivity - The calculated emissivity values.
         assd - The average squared second derivative smoothness
             metric.
@@ -28,9 +27,7 @@ class Emissivity(object):
                        wavelength, 
                        sam_radiance, 
                        dwr_radiance,
-                       lower_win,
-                       upper_win,
-                       calc_assd=True):
+                       window_indices):
         """Emissivity instance contructor.
 
         Arguments:
@@ -38,25 +35,18 @@ class Emissivity(object):
             wavelength - An array of wavelength values.
             sam_radiance - The sample radiance values.
             dwr_radiance - The downwelling radiance values.
-            lower_win - The lower index for the smoothness window.
-            upper_win - The upper index for the smoothness window.
-            calc_assd - A flag to specify whether or not to calculate
-                a new assd.
+            window_indices -
         """
 
         self.temperature = temperature
         self.wavelength = wavelength
         self.sam_radiance = sam_radiance
         self.dwr_radiance = dwr_radiance
-        self.lower_win = lower_win
-        self.upper_win = upper_win
+        self.window_indices = window_indices
         
         self.emissivity = self._calc_emissivity()
         
-        if calc_assd:
-            self.assd = self._calc_assd()
-        else:
-            self.assd = 0
+        self.assd = self._calc_assd()
 
     def __eq__(self, other):
         """Implementation for the == operator.
@@ -111,5 +101,9 @@ class Emissivity(object):
             The calculated assd.
         """
 
-        return np.mean(deriv(deriv(
-            self.emissivity[self.lower_win:self.upper_win]))**2)
+        assd = 0
+
+        for win in self.window_indices:
+            assd += np.mean(deriv(deriv(self.emissivity[win[0]:win[1]]))**2)
+
+        return assd/len(self.window_indices)

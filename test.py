@@ -12,40 +12,44 @@ dwr = 'data/2013_06_04_1435/2013_06_04_1436.dwr'
 data = tes.DpMeasurement(cbb, wbb, sam, dwr)
 
 start = time.time()
-tes_standard = tes.Standard(260, 360, 8.12, 8.6)
-emissivity_standard = tes_standard.find_temperature(data)
+tes_fixed = tes.FixedWindow(260, 360, 8.12, 8.6)
+emissivity_fixed = tes_fixed.find_temperature(data)
 print ''
-print 'standard: ', emissivity_standard.temperature
-print 'assd: ', emissivity_standard.assd
-print 'time: ', time.time() - start
-
-start = time.time()
-tes_moving = tes.MovingWindow(260, 360, 8, 14, 0.5)
-emissivity_moving = tes_moving.find_temperature(data)
-print ''
-print 'moving: ', emissivity_moving.temperature
-print 'assd: ', emissivity_moving.assd
-print 'time: ', time.time() - start
-
-start = time.time()
-tes_variable = tes.VariableMovingWindow(260, 360, 8, 14, 0.5, 1, 5)
-emissivity_variable = tes_variable.find_temperature(data)
-print ''
-print 'variable: ', emissivity_variable.temperature
-print 'assd: ', emissivity_variable.assd
+print 'standard: ', emissivity_fixed.temperature
+print 'assd: ', emissivity_fixed.assd
+print 'indices: ', emissivity_fixed.window_indices
 print 'time: ', time.time() - start
 
 #start = time.time()
-#tes_multiple = tes.MultipleMovingWindow(260, 360, 8, 14, 0.5, 1, 5, 2)
-#emissivity_multiple = tes_multiple.find_temperature(data)
+#tes_moving = tes.MovingWindow(260, 360, 8, 14, 0.48)
+#emissivity_moving = tes_moving.find_temperature(data)
 #print ''
-#print 'multiple: ', emissivity_multiple.temperature
-#print 'assd: ', emissivity_multiple.assd
+#print 'moving: ', emissivity_moving.temperature
+#print 'assd: ', emissivity_moving.assd
+#print 'indices: ', emissivity_moving.window_indices
+#print 'time: ', time.time() - start
+
+#start = time.time()
+#tes_multi_fixed = tes.MultipleFixedWindow(260, 360, [8.0, 9.6], [8.4, 9.9])
+#emissivity_multi_fixed = tes_multi_fixed.find_temperature(data)
+#print ''
+#print 'variable: ', emissivity_multi_fixed.temperature
+#print 'assd: ', emissivity_multi_fixed.assd
+#print 'indices: ', emissivity_multi_fixed.window_indices
 #print 'time: ', time.time() - start
 
 start = time.time()
-tes_waterband = tes.WaterBand(260, 360, 13.55, 13.85)
-emissivity_waterband = tes_waterband.find_temperature(data)
+tes_multi_moving = tes.MultipleMovingWindow(260, 360, 8, 14, [0.5, 0.5])
+emissivity_multi_moving = tes_multi_moving.find_temperature(data)
 print ''
-print 'waterband: ', emissivity_waterband.temperature
+print 'multiple: ', emissivity_multi_moving.temperature
+print 'assd: ', emissivity_multi_moving.assd
+print 'indices: ', emissivity_multi_moving.window_indices
 print 'time: ', time.time() - start
+
+#start = time.time()
+#tes_waterband = tes.WaterBand(260, 360, 13.55, 13.85)
+#emissivity_waterband = tes_waterband.find_temperature(data)
+#print ''
+#print 'waterband: ', emissivity_waterband.temperature
+#print 'time: ', time.time() - start
