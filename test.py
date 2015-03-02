@@ -11,14 +11,14 @@ dwr = 'data/2013_06_04_1435/2013_06_04_1436.dwr'
 
 data = tes.DpMeasurement(cbb, wbb, sam, dwr)
 
-start = time.time()
-tes_fixed = tes.FixedWindow(260, 360, 8.12, 8.6)
-emissivity_fixed = tes_fixed.find_temperature(data)
-print ''
-print 'standard: ', emissivity_fixed.temperature
-print 'assd: ', emissivity_fixed.assd
-print 'indices: ', emissivity_fixed.window_indices
-print 'time: ', time.time() - start
+#start = time.time()
+#tes_fixed = tes.FixedWindow(260, 360, 8.12, 8.6)
+#emissivity_fixed = tes_fixed.find_temperature(data)
+#print ''
+#print 'standard: ', emissivity_fixed.temperature
+#print 'assd: ', emissivity_fixed.assd
+#print 'indices: ', emissivity_fixed.window_indices
+#print 'time: ', time.time() - start
 
 #start = time.time()
 #tes_moving = tes.MovingWindow(260, 360, 8, 14, 0.48)

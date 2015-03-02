@@ -95,7 +95,7 @@ class MultipleMovingWindow(Tes):
         all_combos = itertools.combinations_with_replacement(
                 all_windows, len(self.window_widths))
 
-        good_windows = []
+        emissivities = []
 
         for win_combo in all_combos:
             possible_combo = True
@@ -106,15 +106,7 @@ class MultipleMovingWindow(Tes):
                     possible_combo = False
 
             if possible_combo:
-                good_windows.append(win_combo)
-
-        print len(good_windows)
-
-        emissivities = []
-
-        for window in good_windows:
-            Tes.set_windows(self, window)
-
-            emissivities.append(Tes.find_temperature(self))
+                Tes.set_windows(self, win_combo)
+                emissivities.append(Tes.find_temperature(self))
 
         return min(emissivities)
