@@ -6,8 +6,8 @@ Author:     Ryan LaClair <rgl8828@rit.edu>
 
 import numpy as np
 
-from utils.deriv import deriv
-from utils.bb_radiance import bb_radiance
+from ..utils.deriv import deriv
+from ..utils.bb_radiance import bb_radiance
 
 class Emissivity(object):
     """A class that represents an emissivity object.
@@ -27,7 +27,8 @@ class Emissivity(object):
                        wavelength, 
                        sam_radiance, 
                        dwr_radiance,
-                       window_indices):
+                       window_indices,
+                       calc_assd=True):
         """Emissivity instance contructor.
 
         Arguments:
@@ -36,6 +37,7 @@ class Emissivity(object):
             sam_radiance - The sample radiance values.
             dwr_radiance - The downwelling radiance values.
             window_indices -
+            calc_assd -
         """
 
         self.temperature = temperature
@@ -46,7 +48,10 @@ class Emissivity(object):
         
         self.emissivity = self._calc_emissivity()
         
-        self.assd = self._calc_assd()
+        if calc_assd:
+            self.assd = self._calc_assd()
+        else:
+            self.assd = 0
 
     def __eq__(self, other):
         """Implementation for the == operator.

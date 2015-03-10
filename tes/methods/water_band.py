@@ -7,7 +7,7 @@ Author:     Ryan LaClair <rgl8828@rit.edu>
 import numpy as np
 
 from tes import Tes
-from ..emissivity import Emissivity
+from emissivity import Emissivity
 
 class WaterBand(Tes):
     """A class that represents a water band temperature emissivty
@@ -18,32 +18,17 @@ class WaterBand(Tes):
     """
 
     def __init__(self, lower_temp,
-                       upper_temp,
-                       lower_wave,
-                       upper_wave):
+                       upper_temp):
         """WaterBand instance constructor.  Calls constructor for super
         class.
 
         Arguments:
             lower_temp - The minimum temperature in the range to be tested.
             upper_temp - The maximum temperature in the range to be tested.
-            lower_wave - The minimum wavelength in the range to be tested.
-            upper_wave - The maximum wavelength in the range ot be tested.
         """
 
-        lower_win_width = 0
-        upper_win_width = 0
-        win_steps = 0
-        num_wins = 0
-
         Tes.__init__(self, lower_temp,
-                           upper_temp,
-                           lower_wave,
-                           upper_wave,
-                           lower_win_width,
-                           upper_win_width,
-                           win_steps,
-                           num_wins)
+                           upper_temp)
 
     def find_temperature(self, measurement):
         """Estimate the temperature using the water band method.
@@ -72,21 +57,29 @@ class WaterBand(Tes):
         sam_radiance = sam_radiance[index]
         dwr_radiance = dwr_radiance[index]
 
-        guess = []
+        Tes.set_data(self, sam_radiance, dwr_radiance, wavelength)
 
-        lower_band = np.argmin(abs(wavelength - self.lower_wave))
-        upper_band = np.argmin(abs(wavelength - self.upper_wave))
+        lower_band = np.argmin(abs(wavelength - 13.55))
         middle_band = np.argmin(abs(wavelength - 13.7))
+        upper_band = np.argmin(abs(wavelength - 13.85))
+
+        lower_win = np.argmin(abs(wavelength - 8.0))
+        upper_win = np.argmin(abs(wavelength - 14.0))
+
+        Tes.set_windows(self, [[lower_win, upper_win]])
+
+        emissivities = []
 
         for temp in range(len(self.temps)):
-            guess.append(Emissivity(self.temps[temp], wavelength,
-                sam_radiance, dwr_radiance, lower_band, upper_band, False))
+            emissivities.append(Emissivity(self.temps[temp], self.wavelength,
+                self.sam_radiance, self.dwr_radiance, self.window_indices, False))
+
+            if np.isnan(emissivities[-1].assd):
+                emissivities[-1].assd = np.inf
 
         diffs = []
 
-        for emissivity in guess:
-            #window = em[lowerIndex+1:upperIndex]
-            #diffs.append(np.std(window))
+        for emissivity in emissivities:
             window = emissivity.emissivity[lower_band:upper_band]
             diff = abs((emissivity.emissivity[lower_band] + 
                 emissivity.emissivity[upper_band]) / 2 - 
@@ -95,4 +88,4 @@ class WaterBand(Tes):
 
         index = np.argmin(diffs)
 
-        return guess[index]
+        return emissivities[index]

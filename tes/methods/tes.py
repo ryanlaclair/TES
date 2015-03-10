@@ -6,7 +6,7 @@ Author:     Ryan LaClair <rgl8828@rit.edu>
 
 import numpy as np
 
-from ..emissivity import Emissivity
+from emissivity import Emissivity
 
 class Tes(object):
     """A base class that represents a generic temperature emissivity separation

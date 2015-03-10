@@ -1,104 +1,85 @@
 <!--
-Configuration file for temperature emissivity batch processing.
+Configuration file for temperature emissivity separtation methods.
 -->
 
 <config>
 
-    <method name="waterband">
+    <method name="water_band">
 
-        <variationTolerance>10</variationTolerance>
+        <variation_tolerance>10</variation_tolerance>
 
-        <temperatureLimits>
+        <temperature_limits>
             <lower>260</lower>
             <upper>360</upper>
-        </temperatureLimits>
-
-        <wavelengthLimits>
-            <lower>13.55</lower>
-            <upper>13.85</upper>
-        </wavelengthLimits>
+        </temperature_limits>
 
     </method>
 
-    <method name="standard">
+    <method name="fixed_window">
 
-        <variationTolerance>10</variationTolerance>
+        <variation_tolerance>10</variation_tolerance>
 
-        <temperatureLimits>
+        <temperature_limits>
             <lower>260</lower>
             <upper>360</upper>
-        </temperatureLimits>
+        </temperature_limits>
 
-        <wavelengthLimits>
+        <wavelength_window>
             <lower>8.12</lower>
             <upper>8.6</upper>
-        </wavelengthLimits>
+        </wavelength_window>
 
     </method>
 
-    <method name="moving window">
+    <method name="moving_window">
 
-        <variationTolerance>10</variationTolerance>
+        <variation_tolerance>10</variation_tolerance>
 
-        <temperatureLimits>
+        <temperature_limits>
             <lower>260</lower>
             <upper>360</upper>
-        </temperatureLimits>
+        </temperature_limits>
 
-        <wavelengthLimits>
+        <wavelength_limits>
             <lower>8.0</lower>
             <upper>14.0</upper>
-        </wavelengthLimits>
+        </wavelength_limits>
 
-        <windowWidth>0.2</windowWidth>
+        <window_width>0.2</window_width>
 
     </method>
 
-    <method name="variable moving window">
+    <method name="multiple_fixed_window">
 
-        <variationTolerance>10</variationTolerance>
+        <variation_tolerance>10</variation_tolerance>
 
-        <temperatureLimits>
+        <temperature_limits>
             <lower>260</lower>
             <upper>360</upper>
-        </temperatureLimits>
+        </temperature_limits>
 
-        <wavelengthLimits>
-            <lower>8.0</lower>
-            <upper>14.0</upper>
-        </wavelengthLimits>
-
-        <windowWidthLimits>
-            <lower>0.2</lower>
-            <upper>0.8</upper>
-        </windowWidthLimits>
-
-        <windowStep>0.1</windowStep>
+        <wavelength_windows>
+            <lower>8.12,14.0</lower>
+            <upper>8.6,14.23</upper>
+        </wavelength_windows>
 
     </method>
 
-    <method name="multiple moving window">
+    <method name="multiple_moving_window">
 
-        <variationTolerance>10</variationTolerance>
+        <variation_tolerance>10</variation_tolerance>
 
-        <temperatureLimits>
+        <temperature_limits>
             <lower>260</lower>
             <upper>360</upper>
-        </temperatureLimits>
+        </temperature_limits>
 
-        <wavelengthLimits>
+        <wavelength_limits>
             <lower>8.0</lower>
             <upper>14.0</upper>
-        </wavelengthLimits>
+        </wavelength_limits>
 
-        <windowWidthLimits>
-            <lower>0.2</lower>
-            <upper>0.6</upper>
-        </windowWidthLimits>
-
-        <windowStep>0.2</windowStep>
-
-        <numWindows>2</numWindows>
+	<window_widths>0.2,0.2</window_widths>
 
     </method>
 

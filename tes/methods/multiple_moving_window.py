@@ -8,7 +8,6 @@ import itertools
 import numpy as np
 
 from tes import Tes
-from ..emissivity import Emissivity
 
 class MultipleMovingWindow(Tes):
     """A class that represents a multiple moving window temperature emissivity
