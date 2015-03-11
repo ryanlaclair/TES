@@ -1,17 +1,23 @@
 """
-File:       tes_options_model.py
+File:       tes_options.py
 
 Author:     Ryan LaClair <rgl8828@rit.edu>
 """
 
 import xml.etree.ElementTree as et
 
-class TesOptionsModel(object):
-    """
+class TesOptions(object):
+    """A class that represents the user changable options for the different
+    types of temperature emissivity separation.
+
+    Attributes:
+        Descriptive attribute names corresponding to the necessary options
+        to initialize TES objects of the given type.
     """
 
     def __init__(self):
-        """
+        """Instance constructor.  Initialize all attributes and call method
+        to parse the config file.
         """
 
         self.config_file = 'tes/tes_config.xml'
@@ -49,12 +55,13 @@ class TesOptionsModel(object):
         self.parse_config()
 
     def parse_config(self):
-        """
+        """Parse the xml config file.
         """
 
         tree = et.parse(self.config_file)
 
         for method in tree.iterfind('method'):
+            # parse values for waterband method
             if (method.attrib['name'] == 'water_band'):
                 self.water_band_tolerance = float(method.find(
                     'variation_tolerance').text)
@@ -64,6 +71,7 @@ class TesOptionsModel(object):
                 self.water_band_upper_temp = float(method.find(
                     'temperature_limits/upper').text)
 
+            # parse values for fixed window method
             elif (method.attrib['name'] == 'fixed_window'):
                 self.fixed_tolerance = float(method.find(
                     'variation_tolerance').text)
@@ -78,6 +86,7 @@ class TesOptionsModel(object):
                 self.fixed_upper_wave = float(method.find(
                     'wavelength_window/upper').text)
 
+            # parse values for moving window method
             elif (method.attrib['name'] == 'moving_window'):
                 self.moving_tolerance = float(method.find(
                     'variation_tolerance').text)
@@ -95,6 +104,7 @@ class TesOptionsModel(object):
                 self.moving_window_width = float(method.find(
                     'window_width').text)
 
+            # parse values for multiple fixed window method
             elif (method.attrib['name'] == 'multiple_fixed_window'):
                 self.multi_fixed_tolerance = float(method.find(
                     'variation_tolerance').text)
@@ -112,6 +122,7 @@ class TesOptionsModel(object):
                 self.multi_fixed_upper_waves = [(float(wave) 
                     for wave in upper_waves.split(','))]
 
+            # parse values for multiple moving window method
             elif (method.attrib['name'] == 'multiple_moving_window'):
                 self.multi_moving_tolerance = float(method.find(
                     'variation_tolerance').text)

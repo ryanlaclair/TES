@@ -1,5 +1,5 @@
 """
-File:       water_band.py
+File:       multiple_fixed_window.py
 
 Author:     Ryan LaClair <rgl8828@rit.edu>
 """
@@ -7,31 +7,39 @@ Author:     Ryan LaClair <rgl8828@rit.edu>
 import numpy as np
 
 from tes import Tes
-from emissivity import Emissivity
 
-class WaterBand(Tes):
-    """A class that represents a water band temperature emissivty
+class MultipleFixedWindow(Tes):
+    """A class that represents a moving window temperature emissivity
     separation object.
 
     Attributes:
         Inherited from Tes.
+        lower_waves - The lower wavelengths of the windows being examined.
+        upper_waves - The upper wavelengths of the windows being examined.
     """
 
     def __init__(self, lower_temp,
-                       upper_temp):
-        """WaterBand instance constructor.  Calls constructor for super
+                       upper_temp,
+                       lower_waves,
+                       upper_waves):
+        """MovingWindow instance constructor.  Calls constructor for super
         class.
 
         Arguments:
             lower_temp - The minimum temperature in the range to be tested.
             upper_temp - The maximum temperature in the range to be tested.
+            lower_waves - The lower wavelengths of the windows being examined.
+            upper_waves - The upper wavelengths of the windows being examined.
         """
+
+        self.lower_waves = lower_waves
+        self.upper_waves = upper_waves
 
         Tes.__init__(self, lower_temp,
                            upper_temp)
 
     def find_temperature(self, measurement):
-        """Estimate the temperature using the water band method.
+        """Estimate the temperature using moving window method.
 
         Arguments:
             measurement - A DpMeasurement instance holding the data that will
@@ -58,34 +66,16 @@ class WaterBand(Tes):
         dwr_radiance = dwr_radiance[index]
 
         Tes.set_data(self, sam_radiance, dwr_radiance, wavelength)
+        
+        window_indices = []
 
-        lower_band = np.argmin(abs(wavelength - 13.55))
-        middle_band = np.argmin(abs(wavelength - 13.7))
-        upper_band = np.argmin(abs(wavelength - 13.85))
+        for i in range(len(self.lower_waves)):
+            lower_win = np.argmin(abs(wavelength - self.lower_waves[i]))
+            upper_win = np.argmin(abs(wavelength - self.upper_waves[i]))
 
-        lower_win = np.argmin(abs(wavelength - 8.0))
-        upper_win = np.argmin(abs(wavelength - 14.0))
+            window_indices.append([lower_win, upper_win])
 
-        Tes.set_windows(self, [[lower_win, upper_win]])
+        Tes.set_windows(self, window_indices)
 
-        emissivities = []
-
-        for temp in range(len(self.temps)):
-            emissivities.append(Emissivity(self.temps[temp], self.wavelength,
-                self.sam_radiance, self.dwr_radiance, self.window_indices, False))
-
-            if np.isnan(emissivities[-1].assd):
-                emissivities[-1].assd = np.inf
-
-        diffs = []
-
-        for emissivity in emissivities:
-            window = emissivity.emissivity[lower_band:upper_band]
-            diff = abs((emissivity.emissivity[lower_band] + 
-                emissivity.emissivity[upper_band]) / 2 - 
-                emissivity.emissivity[middle_band])
-            diffs.append(diff)
-
-        index = np.argmin(diffs)
-
-        return emissivities[index]
+        # call the super class find_temperature method
+        return Tes.find_temperature(self)

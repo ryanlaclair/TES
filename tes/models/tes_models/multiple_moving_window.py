@@ -15,9 +15,9 @@ class MultipleMovingWindow(Tes):
 
     Attributes:
         Inherited from Tes.
-        lower_wave -
-        upper_wave -
-        window_widths -
+        lower_wave - The lower wavelength of the window being examined.
+        upper_wave - The upper wavelength of the window being examined.
+        window_widths - The widths of the windows.
     """
 
     def __init__(self, lower_temp,
@@ -31,9 +31,9 @@ class MultipleMovingWindow(Tes):
         Arguments:
             lower_temp - The minimum temperature in the range to be tested.
             upper_temp - The maximum temperature in the range to be tested.
-            lower_wave - The minimum wavelength in the range to be tested.
-            upper_wave - The maximum wavelength in the range ot be tested.
-            window_widths - 
+            lower_wave - The lower wavelength of the window being examined.
+            upper_wave - The upper wavelength of the window being examined.
+            window_widths - The widths of the windows.
         """
 
         self.lower_wave = lower_wave

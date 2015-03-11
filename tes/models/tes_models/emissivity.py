@@ -6,8 +6,8 @@ Author:     Ryan LaClair <rgl8828@rit.edu>
 
 import numpy as np
 
-from ..utils.deriv import deriv
-from ..utils.bb_radiance import bb_radiance
+from ...utils.deriv import deriv
+from ...utils.bb_radiance import bb_radiance
 
 class Emissivity(object):
     """A class that represents an emissivity object.
@@ -17,7 +17,8 @@ class Emissivity(object):
         wavelength - An array of wavelength values.
         sam_radiance - The sample radiance values.
         dwr_radiance - The downwelling radiance values.
-        window_indices - 
+        window_indices - The indices corresponding to the wavelength windows
+            being examined.
         emissivity - The calculated emissivity values.
         assd - The average squared second derivative smoothness
             metric.
@@ -36,8 +37,9 @@ class Emissivity(object):
             wavelength - An array of wavelength values.
             sam_radiance - The sample radiance values.
             dwr_radiance - The downwelling radiance values.
-            window_indices -
-            calc_assd -
+            window_indices - The indices corresponding to the wavelength
+                windows being examined.
+            calc_assd - A flag specifying if the ASSD should be calculated.
         """
 
         self.temperature = temperature

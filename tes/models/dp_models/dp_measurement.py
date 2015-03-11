@@ -11,7 +11,7 @@ import numpy as np
 from dp_file import DpFile
 from dp_header import DpHeader
 from dp_data import DpData
-from ..utils.bb_radiance import bb_radiance
+from ...utils.bb_radiance import bb_radiance
 
 class DpMeasurement(object):
     """A class that holds the information relavent to a complete measurement

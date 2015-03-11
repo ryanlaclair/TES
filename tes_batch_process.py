@@ -9,7 +9,15 @@ import os
 import tes
 
 def process_root_directory(root, method, config):
-    """
+    """Process the root directory.  The root directory contains sub-
+    directories which each contain one set of readings that make up a
+    D&P measurement.
+
+    Arguments:
+        root - The root directory to process.
+        method - A string representing the TES method being implemented.
+        config - A TesOptions object holding the values parsed from the
+            xml config file.
     """
 
     output_file = method + '_batch_process'
@@ -23,7 +31,15 @@ def process_root_directory(root, method, config):
                         out_file)
 
 def process_measurement_directory(measurement_dir, method, config, out_file):
-    """
+    """Process a subdirectory containing four files that makes up a D&P
+    measurement.
+
+    Arguments:
+        measurement_dir - The path to the measurement directory.
+        method - A string representation of the TES method being implemented.
+        config - A TesOptions object holding the values parsed from the
+            xml config file.
+        out_file - The opened (for appending) output file.
     """
 
     for _, _, files in os.walk(measurement_dir):
@@ -68,19 +84,24 @@ def process_measurement_directory(measurement_dir, method, config, out_file):
         out_file.write(out)
 
 def main():
-    """
+    """Prompt the user for the name of the data directory being processed, and
+    the type of temperature emissivity separation to be done.  Processing will
+    occur, and results will be saved to an output file named 
+    [method type]_batch_process.
     """
 
     path = raw_input('Path within current working directory: ')
 
     method = raw_input('TES type (water-band, fixed, moving, multi-fixed, multi-moving): ')
 
+    print 'Output will be in file named ' + method + '_batch_process'
+
     if method == 'multi-moving':
         print 'WARNING: This will take a LONG time..'
 
     root = str(os.getcwd()) + '/' + path + '/'
 
-    config = tes.TesOptionsModel()
+    config = tes.TesOptions()
 
     process_root_directory(root, method, config)
 

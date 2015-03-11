@@ -14,7 +14,7 @@ class Tes(object):
 
     Attributes:
         temps - A numpy array of the temperatures to be tested.
-        window_indices -
+        window_indices - 
         sam_radiance -
         dwr_radiance -
         wavelength -

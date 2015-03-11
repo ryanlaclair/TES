@@ -14,8 +14,8 @@ class FixedWindow(Tes):
 
     Attributes:
         Inherited from Tes.
-        lower_wave - 
-        upper_wave - 
+        lower_wave - The lower wavelength of the window being examined.
+        upper_wave - The upper wavelength of the window being examined.
     """
 
     def __init__(self, lower_temp,
@@ -27,8 +27,8 @@ class FixedWindow(Tes):
         Arguments:
             lower_temp - The minimum temperature in the range to be tested.
             upper_temp - The maximum temperature in the range to be tested.
-            lower_wave -
-            upper_wave -
+            lower_wave - The lower wavelength of the window being examined.
+            upper_wave - The upper wavelength of the window being examined.
         """
 
         self.lower_wave = lower_wave
