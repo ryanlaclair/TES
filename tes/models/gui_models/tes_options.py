@@ -114,13 +114,13 @@ class TesOptions(object):
                 self.multi_fixed_upper_temp = float(method.find(
                     'temperature_limits/upper').text)
 
-                lower_waves = method.find('wavelength_windows/lower').text
-                upper_waves = method.find('wavelength_windows/upper').text
+                lower_waves = method.find('wavelength_windows/lower').text.split(',')
+                upper_waves = method.find('wavelength_windows/upper').text.split(',')
 
-                self.multi_fixed_lower_waves = [(float(wave) 
-                    for wave in lower_waves.split(','))]
-                self.multi_fixed_upper_waves = [(float(wave) 
-                    for wave in upper_waves.split(','))]
+                self.multi_fixed_lower_waves = [float(wave) 
+                    for wave in lower_waves]
+                self.multi_fixed_upper_waves = [float(wave) 
+                    for wave in upper_waves]
 
             # parse values for multiple moving window method
             elif (method.attrib['name'] == 'multiple_moving_window'):
@@ -137,7 +137,7 @@ class TesOptions(object):
                 self.multi_moving_upper_wave = float(method.find(
                     'wavelength_limits/upper').text)
 
-                window_widths = method.find('window_widths').text
+                window_widths = method.find('window_widths').text.split(',')
 
-                self.multi_moving_widths = [(float(width)
-                    for width in window_widths.split(','))]
+                self.multi_moving_widths = [float(width)
+                    for width in window_widths]
