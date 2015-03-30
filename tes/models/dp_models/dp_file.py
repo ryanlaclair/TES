@@ -83,7 +83,7 @@ class DpFile(object):
             calibration_slope - The calculated calibration slope.
             calibration_offset - The calculated calibration offset.
         """
-        
+
         self.data.average_spectrum = (calibration_slope * self.data.average_spectrum 
                 + calibration_offset)
 

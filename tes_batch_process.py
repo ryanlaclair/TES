@@ -8,7 +8,7 @@ import os
 
 import tes
 
-def process_root_directory(root, method, config):
+def process_root_directory(root, method, config, out_file):
     """Process the root directory.  The root directory contains sub-
     directories which each contain one set of readings that make up a
     D&P measurement.
@@ -18,19 +18,14 @@ def process_root_directory(root, method, config):
         method - A string representing the TES method being implemented.
         config - A TesOptions object holding the values parsed from the
             xml config file.
+        out_file - 
     """
 
-    output_file = method + '_batch_process'
+    for measurement_dir, _, files in os.walk(root):
+        process_measurement_directory(measurement_dir, files, method, config,
+                    out_file)
 
-    with open(output_file, 'a') as out_file:
-        out_file.write('Sample\t\t\t\tTemperature\n')
-
-        for _, measurement_dirs, _ in os.walk(root):
-            for measurement_dir in measurement_dirs:
-                process_measurement_directory(root+measurement_dir, method, config,
-                        out_file)
-
-def process_measurement_directory(measurement_dir, method, config, out_file):
+def process_measurement_directory(measurement_dir, files, method, config, out_file):
     """Process a subdirectory containing four files that makes up a D&P
     measurement.
 
@@ -42,8 +37,8 @@ def process_measurement_directory(measurement_dir, method, config, out_file):
         out_file - The opened (for appending) output file.
     """
 
-    for _, _, files in os.walk(measurement_dir):
-
+    if ((len(files) < 6) and (any(f.endswith('.sam') for f in files) 
+            or any(f.endswith('.SAM') for f in files))):
         if '.DS_Store' in files:
             files.remove('.DS_Store')
 
@@ -80,7 +75,9 @@ def process_measurement_directory(measurement_dir, method, config, out_file):
 
         emissivity = tes_method.find_temperature(measurement)
 
-        out = files[2] + '\t\t' + str(emissivity.temperature) + '\n'
+        material = measurement_dir.split('/')
+
+        out = material[-3] + ',' + material[-2] + ',' + material[-1] + ',' + str(emissivity.temperature) + '\n'
         out_file.write(out)
 
 def main():
@@ -90,20 +87,24 @@ def main():
     [method type]_batch_process.
     """
 
-    path = raw_input('Path within current working directory: ')
+    path = raw_input('Full path to data files: ')
 
     method = raw_input('TES type (water-band, fixed, moving, multi-fixed, multi-moving): ')
-
-    print 'Output will be in file named ' + method + '_batch_process'
-
     if method == 'multi-moving':
         print 'WARNING: This will take a LONG time..'
 
-    root = str(os.getcwd()) + '/' + path + '/'
+    print ''
+    print 'Output will be in file named ' + method + '_batch_process'
+    print ''
 
     config = tes.TesOptions()
 
-    process_root_directory(root, method, config)
+    output_file = method + '_batch_process'
+
+    with open(output_file, 'a') as out_file:
+        out_file.write('catagory,type,sample,temperature\n')
+
+        process_root_directory(path, method, config, out_file)
 
 if __name__ == '__main__':
     main()

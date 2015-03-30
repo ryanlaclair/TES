@@ -78,8 +78,9 @@ class DpMeasurement(object):
             plate_blackbody = bb_radiance(plate_temperature + 273.15,
                     self.dwr.data.wavelength)
             plate_emission = plate_emissivity * plate_blackbody
-            self.dwr.data.spectrum = ((self.dwr.data.spectrum - plate_emission) /
-                    (1 - plate_emissivity))
+
+            self.dwr.data.average_spectrum = ((self.dwr.data.average_spectrum - 
+                plate_emission) / (1 - plate_emissivity))
 
     def check_consistency(self, lower_wave, upper_wave, tolerance):
         """Check the consistency of the measurement scans.
