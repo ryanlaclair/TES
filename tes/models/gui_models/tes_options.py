@@ -50,7 +50,7 @@ class TesOptions(object):
         self.multi_moving_upper_temp = 0
         self.multi_moving_lower_wave = 0
         self.multi_moving_upper_wave = 0
-        self.multi_moving_widths = None
+        self.multi_moving_window_widths = None
 
         self.parse_config()
 
@@ -139,5 +139,5 @@ class TesOptions(object):
 
                 window_widths = method.find('window_widths').text.split(',')
 
-                self.multi_moving_widths = [float(width)
+                self.multi_moving_window_widths = [float(width)
                     for width in window_widths]

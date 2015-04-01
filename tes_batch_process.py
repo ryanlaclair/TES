@@ -8,7 +8,7 @@ import os
 
 import tes
 
-def process_root_directory(root, method, config, out_file):
+def process_root_directory(root, method, config):
     """Process the root directory.  The root directory contains sub-
     directories which each contain one set of readings that make up a
     D&P measurement.
@@ -18,14 +18,19 @@ def process_root_directory(root, method, config, out_file):
         method - A string representing the TES method being implemented.
         config - A TesOptions object holding the values parsed from the
             xml config file.
-        out_file - 
     """
 
-    for measurement_dir, _, files in os.walk(root):
-        process_measurement_directory(measurement_dir, files, method, config,
-                    out_file)
+    out_list = []
 
-def process_measurement_directory(measurement_dir, files, method, config, out_file):
+    for measurement_dir, _, files in os.walk(root):
+        out = process_measurement_directory(measurement_dir, files, method, config)
+        
+        if not out is None:
+            out_list.append(out)
+
+    return out_list
+
+def process_measurement_directory(measurement_dir, files, method, config):
     """Process a subdirectory containing four files that makes up a D&P
     measurement.
 
@@ -34,7 +39,6 @@ def process_measurement_directory(measurement_dir, files, method, config, out_fi
         method - A string representation of the TES method being implemented.
         config - A TesOptions object holding the values parsed from the
             xml config file.
-        out_file - The opened (for appending) output file.
     """
 
     if ((len(files) < 6) and (any(f.endswith('.sam') for f in files) 
@@ -78,7 +82,7 @@ def process_measurement_directory(measurement_dir, files, method, config, out_fi
         material = measurement_dir.split('/')
 
         out = material[-3] + ',' + material[-2] + ',' + material[-1] + ',' + str(emissivity.temperature) + '\n'
-        out_file.write(out)
+        return out
 
 def main():
     """Prompt the user for the name of the data directory being processed, and
@@ -99,12 +103,14 @@ def main():
 
     config = tes.TesOptions()
 
-    output_file = method + '_batch_process'
+    out_list = process_root_directory(path, method, config)
+    out_list.sort()
 
+    output_file = method + '_batch_process'
     with open(output_file, 'a') as out_file:
         out_file.write('catagory,type,sample,temperature\n')
-
-        process_root_directory(path, method, config, out_file)
+        for line in out_list:
+            out_file.write(line)
 
 if __name__ == '__main__':
     main()
