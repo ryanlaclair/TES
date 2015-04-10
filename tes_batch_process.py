@@ -98,7 +98,7 @@ def main():
         print 'WARNING: This will take a LONG time..'
 
     print ''
-    print 'Output will be in file named ' + method + '_batch_process'
+    print 'Output will be in file named ' + method + '_batch_process.csv'
     print ''
 
     config = tes.TesOptions()
@@ -106,7 +106,7 @@ def main():
     out_list = process_root_directory(path, method, config)
     out_list.sort()
 
-    output_file = method + '_batch_process'
+    output_file = method + '_batch_process.csv'
     with open(output_file, 'a') as out_file:
         out_file.write('catagory,type,sample,temperature\n')
         for line in out_list:

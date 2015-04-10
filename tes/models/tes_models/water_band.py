@@ -59,7 +59,7 @@ class WaterBand(Tes):
 
         Tes.set_data(self, sam_radiance, dwr_radiance, wavelength)
 
-        # the wavelengths for the waterband method
+        # the wavelengths for the waterband method 13.55, 13.85
         lower_band = np.argmin(abs(wavelength - 13.55))
         middle_band = np.argmin(abs(wavelength - 13.7))
         upper_band = np.argmin(abs(wavelength - 13.85))
