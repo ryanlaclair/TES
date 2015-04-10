@@ -46,7 +46,7 @@ class TesOptionsControl(object):
     def _set_water_band(self):
         """
         """
-
+        
         self.view.tolerance_edit.setText(self.model.water_band_tolerance)
         self.view.min_temp_edit.setText(self.model.water_band_lower_temp)
         self.view.max_temp_edit.setText(self.model.water_band_upper_temp)
@@ -174,15 +174,13 @@ class TesOptionsControl(object):
         """
         """
 
-        print self.view.min_temp_edit.text()
-
         self.model.fixed_tolerance = str(self.view.tolerance_edit.text())
         self.model.fixed_lower_temp = str(self.view.min_temp_edit.text())
         self.model.fixed_upper_temp = str(self.view.max_temp_edit.text())
         self.model.fixed_lower_wave = str(self.view.min_wave_edit.text())
         self.model.fixed_upper_wave = str(self.view.max_wave_edit.text())
 
-    def _set_moving(self):
+    def _update_moving(self):
         """
         """
 
@@ -193,7 +191,7 @@ class TesOptionsControl(object):
         self.model.moving_upper_wave = str(self.view.max_wave_edit.text())
         self.model.moving_width = str(self.view.win_width_edit.text())
 
-    def _set_multi_fixed(self):
+    def _update_multi_fixed(self):
         """
         """
 
@@ -203,7 +201,7 @@ class TesOptionsControl(object):
         self.model.multi_fixed_lower_waves = str(self.view.min_wave_edit.text())
         self.model.multi_fixed_upper_waves = str(self.view.max_wave_edit.text())
 
-    def _set_multi_moving(self):
+    def _update_multi_moving(self):
         """
         """
 

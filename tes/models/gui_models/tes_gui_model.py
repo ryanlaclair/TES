@@ -1,18 +1,13 @@
 """
-File:       tes_options.py
+File:       tes_gui_model.py
 
 Author:     Ryan LaClair <rgl8828@rit.edu>
 """
 
 import xml.etree.ElementTree as et
 
-class TesOptions(object):
-    """A class that represents the user changable options for the different
-    types of temperature emissivity separation.
-
-    Attributes:
-        Descriptive attribute names corresponding to the necessary options
-        to initialize TES objects of the given type.
+class TesGuiModel(object):
+    """
     """
 
     def __init__(self):
@@ -53,6 +48,10 @@ class TesOptions(object):
         self.multi_moving_widths = ''
 
         self.parse_config()
+
+        self.measurement = None
+        self.tes_method = None
+        self.emissivity = None
 
     def parse_config(self):
         """Parse the xml config file.

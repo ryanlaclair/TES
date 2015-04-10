@@ -4,7 +4,7 @@
 from PyQt4 import QtGui, QtCore
 
 from tes_options_view import TesOptionsView
-from ..models.gui_models.tes_options import TesOptions
+from ..models.gui_models.tes_gui_model import TesGuiModel
 from ..controllers.tes_options_control import TesOptionsControl
 from ..controllers.tes_main_control import TesMainControl
 
@@ -18,24 +18,27 @@ class TesMainWindow(QtGui.QWidget):
 
         super(TesMainWindow, self).__init__()
 
-        self.options = TesOptions()
-        self.options_view = TesOptionsView()
-        self.options_control = TesOptionsControl(self.options, self.options_view)
+        self.model = TesGuiModel()
 
-        self.control = TesMainControl(self.options, self)
+        self.options_view = TesOptionsView()
+        self.options_control = TesOptionsControl(self.model, self.options_view)
+
+        self.main_control = TesMainControl(self.model, self)
 
         self.init_ui()
-
         self.options_control.update_view()
+
         self.options_view.measurement_button.clicked.connect(
                 self.options_control.handle_measurement_button)
         self.options_view.technique_combo_box.currentIndexChanged.connect(
                 self.options_control.update_view)
+
         self.ok_button.clicked.connect(self.options_control.update_model)
-        self.ok_button.clicked.connect(self.control.handle_ok_button)
-        self.cancel_button.clicked.connect(self.control.handle_cancel_button)
+        self.ok_button.clicked.connect(self.main_control.handle_ok_button)
+        self.cancel_button.clicked.connect(self.main_control.handle_cancel_button)
 
         self.setLayout(self.layout)
+        self.cancel_button.setFocus(True)
         self.show()
 
     def init_ui(self):
@@ -47,7 +50,7 @@ class TesMainWindow(QtGui.QWidget):
         self.temperature_edit = QtGui.QLabel(' ')
         self.temperature_layout = QtGui.QHBoxLayout()
         self.temperature_layout.addWidget(self.temperature)
-        self.temperature_layout.addWidget(self.temperature_edit)
+        self.temperature_layout.addWidget(self.temperature_edit, QtCore.Qt.AlignLeft)
         self.temperature_group = QtGui.QGroupBox()
         self.temperature_group.setLayout(self.temperature_layout)
 

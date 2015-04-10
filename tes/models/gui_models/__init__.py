@@ -1,1 +1,1 @@
-from tes_options import *
+from tes_gui_model import *
