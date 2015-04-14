@@ -84,11 +84,13 @@ class TesOptionsView(QtGui.QGroupBox):
         self.plots = QtGui.QLabel('Plots:')
         self.radiance_plot_check = QtGui.QCheckBox('Calibrated radiance')
         self.emissivity_plot_check = QtGui.QCheckBox('Calculated emissivity')
+        self.metric_plot_check = QtGui.QCheckBox('Metric')
 
         # plot layout
         self.plot_layout = QtGui.QGridLayout()
         self.plot_layout.addWidget(self.radiance_plot_check, 0, 0)
         self.plot_layout.addWidget(self.emissivity_plot_check, 0, 1)
+        self.plot_layout.addWidget(self.metric_plot_check, 1, 0)
         self.plot_layout.setContentsMargins(0, 0, 0, 0)
 
         # layout

@@ -91,4 +91,6 @@ class MovingWindow(Tes):
             lower_win += 1
             lower_wave = wavelength[lower_win]
 
-        return min(emissivities)
+        self.emissivities = emissivities
+
+        return min(self.emissivities)

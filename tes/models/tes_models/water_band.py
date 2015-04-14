@@ -70,24 +70,14 @@ class WaterBand(Tes):
 
         Tes.set_windows(self, [[lower_win, upper_win]])
 
-        emissivities = []
-
         for temp in range(len(self.temps)):
-            emissivities.append(Emissivity(self.temps[temp], self.wavelength,
-                self.sam_radiance, self.dwr_radiance, self.window_indices, False))
+            emissivity = Emissivity(self.temps[temp], self.wavelength,
+                self.sam_radiance, self.dwr_radiance, self.window_indices, False)
 
-            if np.isnan(emissivities[-1].assd):
-                emissivities[-1].assd = np.inf
-
-        diffs = []
-
-        for emissivity in emissivities:
-            window = emissivity.emissivity[lower_band:upper_band]
-            diff = abs((emissivity.emissivity[lower_band] + 
+            emissivity.assd = abs((emissivity.emissivity[lower_band] + 
                 emissivity.emissivity[upper_band]) / 2 - 
                 emissivity.emissivity[middle_band])
-            diffs.append(diff)
 
-        index = np.argmin(diffs)
+            self.emissivities.append(emissivity)
 
-        return emissivities[index]
+        return min(self.emissivities)

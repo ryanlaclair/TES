@@ -39,6 +39,8 @@ class TesMainWindow(QtGui.QWidget):
 
         self.setLayout(self.layout)
         self.cancel_button.setFocus(True)
+        self.setWindowTitle('Temperature Emissivity Separation')
+
         self.show()
 
     def init_ui(self):

@@ -78,7 +78,7 @@ class Emissivity(object):
             other - The object being compared to.
 
         Returns:
-            True if the assd is less then the assd of other,, False if 
+            True if the assd is less then the assd of other, False if 
             it is not, and NotImplemented if other is not an Emissivity 
             instance.
         """

@@ -34,6 +34,7 @@ class Tes(object):
         self.sam_radiance = []
         self.dwr_radiance = []
         self.wavelength = []
+        self.emissivities = []
 
     def set_windows(self, window_indices):
         """
@@ -57,13 +58,13 @@ class Tes(object):
             emissivity combinations for the given data.
         """
 
-        emissivities = []
+        self.emissivities = []
 
         for temp in range(len(self.temps)):
-            emissivities.append(Emissivity(self.temps[temp], self.wavelength,
+            self.emissivities.append(Emissivity(self.temps[temp], self.wavelength,
                 self.sam_radiance, self.dwr_radiance, self.window_indices))
 
-            if np.isnan(emissivities[-1].assd):
-                emissivities[-1].assd = np.inf
+            if np.isnan(self.emissivities[-1].assd):
+                self.emissivities[-1].assd = np.inf
                 
-        return min(emissivities)
+        return min(self.emissivities)

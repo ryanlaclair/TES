@@ -10,6 +10,9 @@ from ..models.tes_models.fixed_window import FixedWindow
 from ..models.tes_models.moving_window import MovingWindow
 from ..models.tes_models.multiple_fixed_window import MultipleFixedWindow
 from ..models.tes_models.multiple_moving_window import MultipleMovingWindow
+from ..views.radiance_plot_window import RadiancePlotWindow
+from ..views.emissivity_plot_window import EmissivityPlotWindow
+from ..views.metric_plot_window import MetricPlotWindow
 
 class TesMainControl(object):
     """
@@ -50,7 +53,16 @@ class TesMainControl(object):
             else:
                 self._do_known()
 
-        self.update_view()
+            self.update_view()
+
+            if self.view.options_view.radiance_plot_check.isChecked():
+                RadiancePlotWindow(self.model)
+
+            if self.view.options_view.emissivity_plot_check.isChecked():
+                EmissivityPlotWindow(self.model)
+
+            if self.view.options_view.metric_plot_check.isChecked():
+                MetricPlotWindow(self.model)
 
     def handle_cancel_button(self):
         """
@@ -116,8 +128,8 @@ class TesMainControl(object):
         lower_temp = float(self.model.multi_fixed_lower_temp)
         upper_temp = float(self.model.multi_fixed_upper_temp)
         lw = self.model.multi_fixed_lower_waves.split(',')
-        lower_waves = [float(wave) for waves in lw]
-        uw = self.model.multi_fixed_upper_wave.split(',')
+        lower_waves = [float(wave) for wave in lw]
+        uw = self.model.multi_fixed_upper_waves.split(',')
         upper_waves = [float(wave) for wave in uw]
 
         self.model.tes_method = MultipleFixedWindow(lower_temp, upper_temp,

@@ -108,4 +108,6 @@ class MultipleMovingWindow(Tes):
                 Tes.set_windows(self, win_combo)
                 emissivities.append(Tes.find_temperature(self))
 
-        return min(emissivities)
+        self.emissivites = emissivities
+
+        return min(self.emissivities)
