@@ -57,25 +57,24 @@ def process_measurement_directory(measurement_dir, files, method, config):
         measurement = tes.DpMeasurement(cbb_file, wbb_file, sam_file, dwr_file)
 
         if method == 'water-band':
-            tes_method = tes.WaterBand(config.water_band_lower_temp, 
-                    config.water_band_upper_temp)
+            tes_method = tes.WaterBand(float(config.water_band_lower_temp), 
+                    float(config.water_band_upper_temp))
         elif method == 'fixed':
-            tes_method = tes.FixedWindow(config.fixed_lower_temp, 
-                    config.fixed_upper_temp, config.fixed_lower_wave, 
-                    config.fixed_upper_wave)
+            tes_method = tes.FixedWindow(float(config.fixed_lower_temp), 
+                    float(config.fixed_upper_temp), float(config.fixed_lower_wave), 
+                    float(config.fixed_upper_wave))
         elif method == 'moving':
-            tes_method = tes.MovingWindow(config.moving_lower_temp, 
-                    config.moving_upper_temp, config.moving_lower_wave, 
-                    config.moving_upper_wave, config.moving_window_width)
+            tes_method = tes.MovingWindow(float(config.moving_lower_temp), 
+                    float(config.moving_upper_temp), float(config.moving_lower_wave), 
+                    float(config.moving_upper_wave), float(config.moving_width))
         elif method == 'multi-fixed':
-            tes_method = tes.MultipleFixedWindow(config.multi_fixed_lower_temp, 
-                    config.multi_fixed_upper_temp, config.multi_fixed_lower_waves, 
-                    config.multi_fixed_upper_waves)
+            tes_method = tes.MultipleFixedWindow(float(config.multi_fixed_lower_temp), 
+                    float(config.multi_fixed_upper_temp), float(config.multi_fixed_lower_waves), 
+                    float(config.multi_fixed_upper_waves))
         elif method == 'multi-moving':
-            tes_method = tes.MultipleMovingWindow(config.multi_moving_lower_temp, 
-                    config.multi_moving_upper_temp, config.multi_moving_lower_wave, 
-                    config.multi_moving_upper_wave, 
-                    config.multi_moving_window_widths)
+            tes_method = tes.MultipleMovingWindow(float(config.multi_moving_lower_temp), 
+                    float(config.multi_moving_upper_temp), float(config.multi_moving_lower_wave), 
+                    float(config.multi_moving_upper_wave), float(config.multi_moving_widths))
 
         emissivity = tes_method.find_temperature(measurement)
 
@@ -101,7 +100,7 @@ def main():
     print 'Output will be in file named ' + method + '_batch_process.csv'
     print ''
 
-    config = tes.TesOptions()
+    config = tes.TesGuiModel()
 
     out_list = process_root_directory(path, method, config)
     out_list.sort()
