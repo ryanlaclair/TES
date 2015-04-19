@@ -29,7 +29,7 @@ class Tes(object):
             upper_temp - The maximum temperature in the range to be tested.
         """
 
-        self.temps = np.arange(lower_temp, upper_temp+1, 0.1)
+        self.temps = np.arange(lower_temp, upper_temp+0.1, 0.1)
         self.window_indices = []
         self.sam_radiance = []
         self.dwr_radiance = []
