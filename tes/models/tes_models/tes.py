@@ -66,5 +66,20 @@ class Tes(object):
 
             if np.isnan(self.emissivities[-1].assd):
                 self.emissivities[-1].assd = np.inf
-                
+
+        emissivities = self.emissivities
+        continue_search = True
+
+        while continue_search and len(emissivities) > 1:
+            current_min = min(emissivities)
+
+            if current_min == emissivities[-1]:
+                emissivities = emissivities[:-1]
+            elif current_min == emissivities[0]:
+                emissivities = emissivities[1:]
+            else:
+                continue_search = False
+
+        return current_min
+
         return min(self.emissivities)
