@@ -32,6 +32,7 @@ class DpFile(object):
         self.file_name = file_name
         self.header = None
         self.data = None
+        self.model = None
 
         self._read_file()
 
@@ -55,18 +56,18 @@ class DpFile(object):
 
         if (other_test==202):
             raw = open_file.read(1236)[11:]
-            model = '202'
+            self.model = '202'
         elif ((not new_test==102) and old_test==102):
             raw = open_file.read(1133)
-            model = '102old'
+            self.model = '102old'
         elif (new_test==102 and old_test==102):
             raw = open_file.read(1224)
-            model = '102new'
+            self.model = '102new'
 
-        self.header = DpHeader(raw, model)
+        self.header = DpHeader(raw, self.model)
 
         self.data = DpData(open_file, 
-                model, 
+                self.model, 
                 self.header.interferogram_size, 
                 self.header.number_of_coadds, 
                 2048*self.header.zero_fill,

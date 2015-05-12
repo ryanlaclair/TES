@@ -39,6 +39,7 @@ class DpMeasurement(object):
         self.wbb = DpFile(wbb_file)
         self.sam = DpFile(sam_file)
         self.plate = plate
+        self.model = self.sam.model
         
         if (not dwr_file==None):
             self.dwr = DpFile(dwr_file)

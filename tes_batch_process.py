@@ -80,7 +80,15 @@ def process_measurement_directory(measurement_dir, files, method, config):
 
         material = measurement_dir.split('/')
 
-        out = material[-3] + ',' + material[-2] + ',' + material[-1] + ',' + str(emissivity.temperature) + '\n'
+        win = ' '
+
+        if 'moving' in method:
+            for win_idx in emissivity.window_indices:
+                win = win + str(emissivity.wavelength[win_idx[0]]) + ' ' + str(emissivity.wavelength[win_idx[1]]) + ' '
+
+
+        out = material[-3] + ',' + material[-2] + ',' + material[-1] + ',' + str(emissivity.temperature) + win + '\n'
+
         return out
 
 def main():

@@ -70,16 +70,16 @@ class Tes(object):
         emissivities = self.emissivities
         continue_search = True
 
-        while continue_search and len(emissivities) > 1:
-            current_min = min(emissivities)
+        #while continue_search and len(emissivities) > 1:
+        #    min_idx = np.argmin(emissivities)
+        #    current_min = emissivities[min_idx]
 
-            if current_min == emissivities[-1]:
-                emissivities = emissivities[:-1]
-            elif current_min == emissivities[0]:
-                emissivities = emissivities[1:]
-            else:
-                continue_search = False
+        #    if current_min == emissivities[-1]:
+        #        emissivities = emissivities[:-1]
+        #    elif current_min == emissivities[0]:
+        #        emissivities = emissivities[1:]
+        #    else:
+        #        continue_search = False
 
-        return current_min
-
-        return min(self.emissivities)
+        #return current_min
+        return min(emissivities)

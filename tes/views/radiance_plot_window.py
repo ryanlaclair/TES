@@ -1,15 +1,26 @@
 """
 """
 
-from PyQt4 import QtGui, QtCore
-import matplotlib.pyplot as plt
-import matplotlib.animation as ani
-from matplotlib.backends.backend_qt4agg import (FigureCanvasQTAgg
-    as FigureCanvas)
-from matplotlib.backends.backend_qt4agg import (NavigationToolbar2QT
-    as NavigationToolbar)
+try:
+    from PyQt5 import QtWidgets, QtCore
+    import matplotlib
+    matplotlib.use('Qt5Agg')
+    import matplotlib.pyplot as plt
+    from matplotlib.backends.backend_qt5agg import (FigureCanvasQTAgg
+       as FigureCanvas)
+    from matplotlib.backends.backend_qt5agg import (NavigationToolbar2QT
+       as NavigationToolbar)
+except ImportError:
+    from PyQt4 import QtGui as QtWidgets, QtCore
+    import matplotlib
+    matplotlib.use('Qt4Agg')
+    import matplotlib.pyplot as plt
+    from matplotlib.backends.backend_qt4agg import (FigureCanvasQTAgg
+       as FigureCanvas)
+    from matplotlib.backends.backend_qt4agg import (NavigationToolbar2QT
+       as NavigationToolbar)
 
-class RadiancePlotWindow(QtGui.QWidget):
+class RadiancePlotWindow(QtWidgets.QWidget):
     """
     """
 
@@ -31,10 +42,10 @@ class RadiancePlotWindow(QtGui.QWidget):
         """
 
         # ok button
-        self.ok_button = QtGui.QPushButton('Ok')
+        self.ok_button = QtWidgets.QPushButton('Ok')
         self.ok_button.setFixedWidth(100)
         self.ok_button.clicked.connect(self.handle_ok_button)
-        self.button_layout = QtGui.QHBoxLayout()
+        self.button_layout = QtWidgets.QHBoxLayout()
         self.button_layout.addWidget(self.ok_button)
 
         # plot area
@@ -64,12 +75,12 @@ class RadiancePlotWindow(QtGui.QWidget):
 
         canvas.draw()
 
-        self.plot_layout = QtGui.QVBoxLayout()
+        self.plot_layout = QtWidgets.QVBoxLayout()
         self.plot_layout.addWidget(toolbar)
         self.plot_layout.addWidget(canvas)
 
         # layout
-        self.layout = QtGui.QVBoxLayout()
+        self.layout = QtWidgets.QVBoxLayout()
         self.layout.addLayout(self.plot_layout)
         self.layout.addLayout(self.button_layout)
 

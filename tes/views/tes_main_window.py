@@ -1,14 +1,17 @@
 """
 """
 
-from PyQt4 import QtGui, QtCore
+try:
+   from PyQt5 import QtWidgets, QtCore
+except ImportError:
+   from PyQt4 import QtGui as QtWidgets, QtCore
 
 from tes_options_view import TesOptionsView
 from ..models.gui_models.tes_gui_model import TesGuiModel
 from ..controllers.tes_options_control import TesOptionsControl
 from ..controllers.tes_main_control import TesMainControl
 
-class TesMainWindow(QtGui.QWidget):
+class TesMainWindow(QtWidgets.QWidget):
     """
     """
 
@@ -48,30 +51,30 @@ class TesMainWindow(QtGui.QWidget):
         """
 
         # temperature
-        self.temperature = QtGui.QLabel('Sample temperature:')
-        self.temperature_edit = QtGui.QLabel(' ')
-        self.temperature_layout = QtGui.QHBoxLayout()
+        self.temperature = QtWidgets.QLabel('Sample temperature:')
+        self.temperature_edit = QtWidgets.QLabel(' ')
+        self.temperature_layout = QtWidgets.QHBoxLayout()
         self.temperature_layout.addWidget(self.temperature)
         self.temperature_layout.addWidget(self.temperature_edit, QtCore.Qt.AlignLeft)
-        self.temperature_group = QtGui.QGroupBox()
+        self.temperature_group = QtWidgets.QGroupBox()
         self.temperature_group.setLayout(self.temperature_layout)
 
         # ok button
-        self.ok_button = QtGui.QPushButton('Ok')
+        self.ok_button = QtWidgets.QPushButton('Ok')
         self.ok_button.setFixedWidth(100)
 
         # cancel button
-        self.cancel_button = QtGui.QPushButton('Cancel')
+        self.cancel_button = QtWidgets.QPushButton('Cancel')
         self.cancel_button.setFixedWidth(100)
 
         # button layout
-        self.button_layout = QtGui.QHBoxLayout()
+        self.button_layout = QtWidgets.QHBoxLayout()
         self.button_layout.addStretch()
         self.button_layout.addWidget(self.ok_button)
         self.button_layout.addWidget(self.cancel_button)
         self.button_layout.addStretch()
 
-        self.layout = QtGui.QVBoxLayout()
+        self.layout = QtWidgets.QVBoxLayout()
         self.layout.addWidget(self.options_view)
         self.layout.addWidget(self.temperature_group)
         self.layout.addLayout(self.button_layout)

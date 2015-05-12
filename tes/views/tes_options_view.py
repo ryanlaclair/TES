@@ -1,10 +1,12 @@
 """
 """
 
-from PyQt4 import QtGui, QtCore
+try:
+   from PyQt5 import QtWidgets, QtCore
+except ImportError:
+   from PyQt4 import QtGui as QtWidgets, QtCore
 
-
-class TesOptionsView(QtGui.QGroupBox):
+class TesOptionsView(QtWidgets.QGroupBox):
     """
     """
 
@@ -22,15 +24,15 @@ class TesOptionsView(QtGui.QGroupBox):
         """
 
         # measurement
-        self.measurement = QtGui.QLabel('Measurement:')
-        self.measurement_edit = QtGui.QLineEdit()
+        self.measurement = QtWidgets.QLabel('Measurement:')
+        self.measurement_edit = QtWidgets.QLineEdit()
         self.measurement_edit.setPlaceholderText('Required..')
-        self.measurement_button = QtGui.QPushButton('Browse')
+        self.measurement_button = QtWidgets.QPushButton('Browse')
         self.measurement_button.setFixedWidth(100)
 
         # technique
-        self.technique = QtGui.QLabel('Technique:')
-        self.technique_combo_box = QtGui.QComboBox()
+        self.technique = QtWidgets.QLabel('Technique:')
+        self.technique_combo_box = QtWidgets.QComboBox()
         self.technique_combo_box.addItem(
                 'Water Band Temperature Emissivity Separation')
         self.technique_combo_box.addItem(
@@ -45,56 +47,56 @@ class TesOptionsView(QtGui.QGroupBox):
                 'Known Temperature')
 
         # plate emissivity
-        self.plate = QtGui.QLabel('Plate emissivity:')
-        self.plate_edit = QtGui.QLineEdit()
+        self.plate = QtWidgets.QLabel('Plate emissivity:')
+        self.plate_edit = QtWidgets.QLineEdit()
         self.plate_edit.setFixedWidth(75)
         self.plate_edit.setPlaceholderText('Optional..')
 
         # tolerance
-        self.tolerance = QtGui.QLabel('Coadd variation tolerance:')
-        self.tolerance_edit = QtGui.QLineEdit()
+        self.tolerance = QtWidgets.QLabel('Coadd variation tolerance:')
+        self.tolerance_edit = QtWidgets.QLineEdit()
         self.tolerance_edit.setFixedWidth(75)
-        self.percent = QtGui.QLabel('%')
+        self.percent = QtWidgets.QLabel('%')
 
         # temperature range
-        self.temp_limits = QtGui.QLabel('Temperature limits:')
-        self.min_temp_edit = QtGui.QLineEdit()
+        self.temp_limits = QtWidgets.QLabel('Temperature limits:')
+        self.min_temp_edit = QtWidgets.QLineEdit()
         self.min_temp_edit.setFixedWidth(75)
-        self.k1 = QtGui.QLabel('K')
-        self.max_temp_edit = QtGui.QLineEdit()
+        self.k1 = QtWidgets.QLabel('K')
+        self.max_temp_edit = QtWidgets.QLineEdit()
         self.max_temp_edit.setFixedWidth(75)
-        self.k2 = QtGui.QLabel('K')
+        self.k2 = QtWidgets.QLabel('K')
 
         # wavelength range
-        self.wave_limits = QtGui.QLabel('Wavelength limits:')
-        self.min_wave_edit = QtGui.QLineEdit()
+        self.wave_limits = QtWidgets.QLabel('Wavelength limits:')
+        self.min_wave_edit = QtWidgets.QLineEdit()
         self.min_wave_edit.setFixedWidth(75)
-        self.micron1 = QtGui.QLabel('microns')
-        self.max_wave_edit = QtGui.QLineEdit()
+        self.micron1 = QtWidgets.QLabel('microns')
+        self.max_wave_edit = QtWidgets.QLineEdit()
         self.max_wave_edit.setFixedWidth(75)
-        self.micron2 = QtGui.QLabel('microns')
+        self.micron2 = QtWidgets.QLabel('microns')
 
         # window width
-        self.win_widths = QtGui.QLabel('Window widths:')
-        self.win_width_edit = QtGui.QLineEdit()
+        self.win_widths = QtWidgets.QLabel('Window widths:')
+        self.win_width_edit = QtWidgets.QLineEdit()
         self.win_width_edit.setFixedWidth(75)
-        self.micron3 = QtGui.QLabel('microns')
+        self.micron3 = QtWidgets.QLabel('microns')
 
         # plots
-        self.plots = QtGui.QLabel('Plots:')
-        self.radiance_plot_check = QtGui.QCheckBox('Calibrated radiance')
-        self.emissivity_plot_check = QtGui.QCheckBox('Calculated emissivity')
-        self.metric_plot_check = QtGui.QCheckBox('Metric')
+        self.plots = QtWidgets.QLabel('Plots:')
+        self.radiance_plot_check = QtWidgets.QCheckBox('Calibrated radiance')
+        self.emissivity_plot_check = QtWidgets.QCheckBox('Calculated emissivity')
+        self.metric_plot_check = QtWidgets.QCheckBox('Metric')
 
         # plot layout
-        self.plot_layout = QtGui.QGridLayout()
+        self.plot_layout = QtWidgets.QGridLayout()
         self.plot_layout.addWidget(self.radiance_plot_check, 0, 0)
         self.plot_layout.addWidget(self.emissivity_plot_check, 0, 1)
         self.plot_layout.addWidget(self.metric_plot_check, 1, 0)
         self.plot_layout.setContentsMargins(0, 0, 0, 0)
 
         # layout
-        self.layout = QtGui.QGridLayout()
+        self.layout = QtWidgets.QGridLayout()
         self.layout.addWidget(self.measurement, 0, 0, QtCore.Qt.AlignRight)
         self.layout.addWidget(self.measurement_edit, 0, 1)
         self.layout.addWidget(self.measurement_button, 0, 2)
@@ -136,7 +138,7 @@ class TesOptionsView(QtGui.QGroupBox):
         """
 
 
-        layout = QtGui.QHBoxLayout()
+        layout = QtWidgets.QHBoxLayout()
 
         layout.addWidget(edit1)
         layout.addWidget(label1)
@@ -155,9 +157,9 @@ class TesOptionsView(QtGui.QGroupBox):
         """
         """
 
-        layout = QtGui.QVBoxLayout()
+        layout = QtWidgets.QVBoxLayout()
 
-        layout.addWidget(QtGui.QFrame())
-        layout.addWidget(QtGui.QFrame())
+        layout.addWidget(QtWidgets.QFrame())
+        layout.addWidget(QtWidgets.QFrame())
 
         return layout
