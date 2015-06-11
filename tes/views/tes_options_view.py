@@ -1,17 +1,21 @@
 """
+File:       tes_options_view.py
+
+Author:     Ryan LaClair <rgl8828@rit.edu>
 """
 
+# Try block to ensure compatibility with PyQt4 and PyQt5
 try:
    from PyQt5 import QtWidgets, QtCore
 except ImportError:
    from PyQt4 import QtGui as QtWidgets, QtCore
 
 class TesOptionsView(QtWidgets.QGroupBox):
-    """
+    """A class that represents the options frame layout.
     """
 
     def __init__(self):
-        """
+        """Instance constructor.
         """
 
         super(TesOptionsView, self).__init__()
@@ -20,7 +24,7 @@ class TesOptionsView(QtWidgets.QGroupBox):
         self.setLayout(self.layout)
 
     def init_ui(self):
-        """
+        """Initiallize and add the UI elements to the frame.
         """
 
         # measurement
@@ -34,17 +38,15 @@ class TesOptionsView(QtWidgets.QGroupBox):
         self.technique = QtWidgets.QLabel('Technique:')
         self.technique_combo_box = QtWidgets.QComboBox()
         self.technique_combo_box.addItem(
-                'Water Band Temperature Emissivity Separation')
-        self.technique_combo_box.addItem(
                 'Fixed Window Temperature Emissivity Separation')
         self.technique_combo_box.addItem(
                 'Moving Window Temperature Emissivity Separation')
         self.technique_combo_box.addItem(
                 'Multiple Fixed Window Temperature Emissivity Separation')
         self.technique_combo_box.addItem(
-                'Multiple Moving Window Temperature Emissivity Separation')
-        self.technique_combo_box.addItem(
                 'Known Temperature')
+        #self.technique_combo_box.addItem(
+        #        'Multiple Moving Window Temperature Emissivity Separation')
 
         # plate emissivity
         self.plate = QtWidgets.QLabel('Plate emissivity:')
@@ -127,13 +129,13 @@ class TesOptionsView(QtWidgets.QGroupBox):
         """Helper function to create a sublayout.  For use in adding units to
         Qt Edit boxes.
 
-        arguments:
+        Arguments:
             edit1 - First edit box.
             label1 - First label.
             edit2 - Second edit box (optional).
             label2 - Second label (optional).
 
-        returns:
+        Returns:
             A horizontal box layout containing the specified elements.
         """
 
@@ -154,7 +156,10 @@ class TesOptionsView(QtWidgets.QGroupBox):
         return layout
 
     def _add_stretch(self):
-        """
+        """Create a blank stretch layout.
+
+        Returns:
+            The blank layout.
         """
 
         layout = QtWidgets.QVBoxLayout()

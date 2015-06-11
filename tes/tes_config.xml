@@ -4,17 +4,6 @@ Configuration file for temperature emissivity separtation methods.
 
 <config>
 
-    <method name="water_band">
-
-        <variation_tolerance>10</variation_tolerance>
-
-        <temperature_limits>
-            <lower>260</lower>
-            <upper>360</upper>
-        </temperature_limits>
-
-    </method>
-
     <method name="fixed_window">
 
         <variation_tolerance>10</variation_tolerance>
@@ -65,6 +54,9 @@ Configuration file for temperature emissivity separtation methods.
 
     </method>
 
+    <!--
+    Multiple moving window method not currently implemented.
+
     <method name="multiple_moving_window">
 
         <variation_tolerance>10</variation_tolerance>
@@ -82,5 +74,7 @@ Configuration file for temperature emissivity separtation methods.
 	<window_widths>0.2,0.2</window_widths>
 
     </method>
+
+    -->
 
 </config>

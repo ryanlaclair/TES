@@ -1,6 +1,10 @@
 """
+File:       tes_main_window.py
+
+Author:     Ryan LaClair <rgl8828@rit.edu>
 """
 
+# Try block to ensure compatibility with PyQt4 and PyQt5
 try:
    from PyQt5 import QtWidgets, QtCore
 except ImportError:
@@ -12,11 +16,20 @@ from ..controllers.tes_options_control import TesOptionsControl
 from ..controllers.tes_main_control import TesMainControl
 
 class TesMainWindow(QtWidgets.QWidget):
-    """
+    """A class that represents the main window layout.
+
+    Attributes:
+        model - The TES program model.
+        options_view - The TesOptionsView object respresenting the options
+            frame.
+        options_control - The TesOptionsControl object representing the options
+            controller.
+        main_control - The TesMainControl object representing the main window
+            controller.
     """
 
     def __init__(self):
-        """
+        """Instance constructor.
         """
 
         super(TesMainWindow, self).__init__()
@@ -47,7 +60,7 @@ class TesMainWindow(QtWidgets.QWidget):
         self.show()
 
     def init_ui(self):
-        """
+        """Initialize and add the UI elements to the window.
         """
 
         # temperature
@@ -78,4 +91,3 @@ class TesMainWindow(QtWidgets.QWidget):
         self.layout.addWidget(self.options_view)
         self.layout.addWidget(self.temperature_group)
         self.layout.addLayout(self.button_layout)
-

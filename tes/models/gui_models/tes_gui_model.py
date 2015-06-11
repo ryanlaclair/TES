@@ -7,7 +7,11 @@ Author:     Ryan LaClair <rgl8828@rit.edu>
 import xml.etree.ElementTree as et
 
 class TesGuiModel(object):
-    """
+    """A model class that holds all of the data used for the temperature
+    emissivity separation program.
+
+    Attributes:
+        All of the data memebers for each TES type.
     """
 
     def __init__(self):
@@ -16,10 +20,6 @@ class TesGuiModel(object):
         """
 
         self.config_file = 'tes/tes_config.xml'
-
-        self.water_band_tolerance = ''
-        self.water_band_lower_temp = ''
-        self.water_band_upper_temp = ''
 
         self.fixed_tolerance = ''
         self.fixed_lower_temp = ''
@@ -40,12 +40,16 @@ class TesGuiModel(object):
         self.multi_fixed_lower_waves = ''
         self.multi_fixed_upper_waves = ''
 
-        self.multi_moving_tolerance = ''
-        self.multi_moving_lower_temp = ''
-        self.multi_moving_upper_temp = ''
-        self.multi_moving_lower_wave = ''
-        self.multi_moving_upper_wave = ''
-        self.multi_moving_widths = ''
+# Mutiple moving window method not currently implemented.
+#
+#        self.multi_moving_tolerance = ''
+#        self.multi_moving_lower_temp = ''
+#        self.multi_moving_upper_temp = ''
+#        self.multi_moving_lower_wave = ''
+#        self.multi_moving_upper_wave = ''
+#        self.multi_moving_widths = ''
+
+        self.known_temp = ''
 
         self.parse_config()
 
@@ -60,18 +64,8 @@ class TesGuiModel(object):
         tree = et.parse(self.config_file)
 
         for method in tree.iterfind('method'):
-            # parse values for waterband method
-            if (method.attrib['name'] == 'water_band'):
-                self.water_band_tolerance = method.find(
-                    'variation_tolerance').text
-
-                self.water_band_lower_temp = method.find(
-                    'temperature_limits/lower').text
-                self.water_band_upper_temp = method.find(
-                    'temperature_limits/upper').text
-
             # parse values for fixed window method
-            elif (method.attrib['name'] == 'fixed_window'):
+            if (method.attrib['name'] == 'fixed_window'):
                 self.fixed_tolerance = method.find(
                     'variation_tolerance').text
 
@@ -118,20 +112,22 @@ class TesGuiModel(object):
                 self.multi_fixed_upper_waves = method.find(
                         'wavelength_windows/upper').text
 
-            # parse values for multiple moving window method
-            elif (method.attrib['name'] == 'multiple_moving_window'):
-                self.multi_moving_tolerance = method.find(
-                    'variation_tolerance').text
-
-                self.multi_moving_lower_temp = method.find(
-                    'temperature_limits/lower').text
-                self.multi_moving_upper_temp = method.find(
-                    'temperature_limits/upper').text
-
-                self.multi_moving_lower_wave = method.find(
-                    'wavelength_limits/lower').text
-                self.multi_moving_upper_wave = method.find(
-                    'wavelength_limits/upper').text
-
-                self.multi_moving_widths = method.find(
-                        'window_widths').text
+# Mutiple moving window method not currently implemented.
+#
+#            # parse values for multiple moving window method
+#            elif (method.attrib['name'] == 'multiple_moving_window'):
+#                self.multi_moving_tolerance = method.find(
+#                    'variation_tolerance').text
+#
+#                self.multi_moving_lower_temp = method.find(
+#                    'temperature_limits/lower').text
+#                self.multi_moving_upper_temp = method.find(
+#                    'temperature_limits/upper').text
+#
+#                self.multi_moving_lower_wave = method.find(
+#                    'wavelength_limits/lower').text
+#                self.multi_moving_upper_wave = method.find(
+#                    'wavelength_limits/upper').text
+#
+#                self.multi_moving_widths = method.find(
+#                        'window_widths').text

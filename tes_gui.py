@@ -1,13 +1,15 @@
 """
+File:       tes_gui.py
+
+Author:     Ryan LaClair <rgl8828@rit.edu>
 """
 
 import sys
 from PyQt4 import QtGui, QtCore
 import tes
-#from tes.views.tes_main_window import TesMainWindow
 
 def main():
-    """
+    """The main entry point for the TES program graphical user interface.
     """
 
     app = QtGui.QApplication(sys.argv)

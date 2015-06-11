@@ -1,6 +1,10 @@
 """
+File:       emissivity_plot_window.py
+
+Author:     Ryan LaClair <rgl8828@rit.edu>
 """
 
+# Try block to ensure compatibility with PyQt4 and PyQt5
 try:
     from PyQt5 import QtWidgets, QtCore
     import matplotlib
@@ -21,11 +25,18 @@ except ImportError:
        as NavigationToolbar)
 
 class EmissivityPlotWindow(QtWidgets.QWidget):
-    """
+    """A class that represents a pop-up window containing a plot of the
+    calculated emissivity.
+
+    Attributes:
+        model - The TES program model.
     """
 
     def __init__(self, model):
-        """
+        """Instance constructor.
+
+        Arguments:
+            model - The TES program model.
         """
 
         super(EmissivityPlotWindow, self).__init__()
@@ -38,7 +49,7 @@ class EmissivityPlotWindow(QtWidgets.QWidget):
         self.show()
 
     def init_ui(self):
-        """
+        """Initialize and add the UI elements to the window.
         """
 
         # ok button
@@ -74,7 +85,7 @@ class EmissivityPlotWindow(QtWidgets.QWidget):
         self.layout.addLayout(self.button_layout)
 
     def handle_ok_button(self):
-        """
+        """Event handler for the OK button.
         """
 
         plt.close('all')

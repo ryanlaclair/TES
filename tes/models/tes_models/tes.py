@@ -14,10 +14,10 @@ class Tes(object):
 
     Attributes:
         temps - A numpy array of the temperatures to be tested.
-        window_indices - 
-        sam_radiance -
-        dwr_radiance -
-        wavelength -
+        window_indices - The indices for the window being examined.
+        sam_radiance - The sample radiance values.
+        dwr_radiance - The downwelling radiance values.
+        wavelength - An array of the wavelengths.
     """
 
     def __init__(self, lower_temp,
@@ -37,13 +37,21 @@ class Tes(object):
         self.emissivities = []
 
     def set_windows(self, window_indices):
-        """
+        """Set the windows being examined.
+
+        Arguments:
+            window_indices - The indices for the window being examined.
         """
 
         self.window_indices = window_indices
 
     def set_data(self, sam_radiance, dwr_radiance, wavelength):
-        """
+        """Set the data currently being used.
+
+        Arguments:
+            sam_radiance - The sample radiance values.
+            dwr_radiance - The downwelling radiance values.
+            wavelength - An array of the wavelengths.
         """
 
         self.sam_radiance = sam_radiance
