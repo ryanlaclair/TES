@@ -56,10 +56,7 @@ def process_measurement_directory(measurement_dir, files, method, config):
 
         measurement = tes.DpMeasurement(cbb_file, wbb_file, sam_file, dwr_file)
 
-        if method == 'water-band':
-            tes_method = tes.WaterBand(float(config.water_band_lower_temp), 
-                    float(config.water_band_upper_temp))
-        elif method == 'fixed':
+        if method == 'fixed':
             tes_method = tes.FixedWindow(float(config.fixed_lower_temp), 
                     float(config.fixed_upper_temp), float(config.fixed_lower_wave), 
                     float(config.fixed_upper_wave))
@@ -71,10 +68,6 @@ def process_measurement_directory(measurement_dir, files, method, config):
             tes_method = tes.MultipleFixedWindow(float(config.multi_fixed_lower_temp), 
                     float(config.multi_fixed_upper_temp), float(config.multi_fixed_lower_waves), 
                     float(config.multi_fixed_upper_waves))
-        elif method == 'multi-moving':
-            tes_method = tes.MultipleMovingWindow(float(config.multi_moving_lower_temp), 
-                    float(config.multi_moving_upper_temp), float(config.multi_moving_lower_wave), 
-                    float(config.multi_moving_upper_wave), float(config.multi_moving_widths))
 
         emissivity = tes_method.find_temperature(measurement)
 
@@ -84,10 +77,10 @@ def process_measurement_directory(measurement_dir, files, method, config):
 
         if 'moving' in method:
             for win_idx in emissivity.window_indices:
-                win = win + str(emissivity.wavelength[win_idx[0]]) + ' ' + str(emissivity.wavelength[win_idx[1]]) + ' '
+                win = win + str(emissivity.wavelength[win_idx[0]]) + ',' + str(emissivity.wavelength[win_idx[1]]) + ','
 
 
-        out = material[-3] + ',' + material[-2] + ',' + material[-1] + ',' + str(emissivity.temperature) + win + '\n'
+        out = material[-3] + ',' + material[-2] + ',' + material[-1] + ',' + str(emissivity.temperature) + ',' + win + '\n'
 
         return out
 
@@ -100,9 +93,7 @@ def main():
 
     path = raw_input('Full path to data files: ')
 
-    method = raw_input('TES type (water-band, fixed, moving, multi-fixed, multi-moving): ')
-    if method == 'multi-moving':
-        print 'WARNING: This will take a LONG time..'
+    method = raw_input('TES type (fixed, moving, multi-fixed): ')
 
     print ''
     print 'Output will be in file named ' + method + '_batch_process.csv'
