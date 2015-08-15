@@ -1,3 +1,3 @@
 # Temperature Emissivity Separation
 
-Work in progress.
+Please see [/docs](/docs) for implementation specific documentation.
