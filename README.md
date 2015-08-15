@@ -8,4 +8,5 @@ used to hold the data that makes up one D&P Instrument FTIR measurement.
 that represent the different possible temperature emissivity separation methods.
 + [/docs/ingest_flow.pdf](/docs/ingest_flow.pdf) is a flow diagram for the data
 ingestion portion of the process.
-
++ [/docs/algo_flow.pdf](/docs/algo_flow.pdf) is a flow diagram for the temperature
+emissivity separation algorithm.
