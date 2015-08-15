@@ -1,3 +1,4 @@
+#! /usr/local/bin/python
 """
 File:       tes_gui.py
 

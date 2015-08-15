@@ -1,0 +1,55 @@
++------------------+                       
+|       Tes        |                       
+|------------------|                       
+| emissivities     |  ---->  [ Emissivity ]
+| temps            |                       
+| window_indices   |                       
+| sam_radiance     |                       
+| dwr_radiance     |                       
+| wavelength       |                       
+|------------------|                       
+| __init__         |                       
+| set_windows      |                       
+| set_data         |                       
+| find_temperature |                       
++------------------+                       
+        .                                                                                                   
+       /_\                                                                                                  
+        |                       [ Tes ]                      [ Tes ]                        [ Tes ]         
+        |                          .                            .                              .            
+        |                         /_\                          /_\                            /_\           
+        |                          |                            |                              |            
+        |                          |                            |                              |            
++------------------+       +------------------+       +----------------------+       +---------------------+
+|   FixedWindow    |       |   MovingWindow   |       | MultipleMovingWindow |       | MultipleFixedWindow |
+|------------------|       |------------------|       |----------------------|       |---------------------|
+| lower_wave       |       | lower_wave       |       | lower_wave           |       | lower_waves         |
+| upper_wave       |       | upper_wave       |       | upper_wave           |       | upper_waves         |
+|------------------|       | window_width     |       | window_widths        |       |---------------------|
+| __init__         |       | emissivities     |       | emissivites          |       | __init__            |
+| find_temperature |       |------------------|       |----------------------|       | find_temperature    |
++------------------+       | __init__         |       | __init__             |       +---------------------+
+                           | find_temperature |       | find_temperature     |                              
+                           +------------------+       +----------------------+                              
+                                               
+                                               
+                                               
+                                               
++------------------+       +------------------+
+|    Emissivity    |       | KnownTemperature |
+|------------------|       |------------------|
+| temperature      |       | temp             |
+| wavelength       |       |------------------|
+| sam_radiance     |       | __init__         |
+| dwr_radiance     |       | find_temperature |
+| window_indices   |       +------------------+
+| emissivity       |                           
+| assd             |                           
+|------------------|                           
+| __init__         |                           
+| __eq__           |                           
+| __lt__           |                           
+| _calc_emissivity |                           
+| _calc_assd       |                           
++------------------+                           
+

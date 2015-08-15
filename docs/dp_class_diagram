@@ -1,0 +1,91 @@
++--------------------------+
+|         DpHeader         |
+|--------------------------|
+| label                    |
+| version                  |
+| revision                 |
+| date                     |
+| file_format              |
+| file_type                |
+| original_file_name       |
+| reference_file_name      |
+| related_file_name_a      |
+| related_file_name_b      |
+| related_file_name_c      |
+| related_file_name_d      |
+| annotate                 |
+| instrument_model         |
+| instrument_serial_number |
+| software_version_number  |
+| crystal_material         |
+| laser_wavelength_microns |
+| laser_null_doubling      |
+| optical_ratio            |
+| padding                  |
+| dispersion_constant_xc   |
+| dispersion_constant_xm   |
+| dispersion_constant_xb   |
+| num_chan                 |
+| interferogram_size       |
+| interferogram_center     |
+| scan_direction           |
+| acquire_mode             |
+| emissivity               |
+| apodization              |
+| zero_fill                |
+| run_time_math            |
+| fft_size                 |
+| number_of_coadds         |
+| number_of_igrams         |
+| single_sided             |
+| chan_display             |
+| amb_temperature          |
+| inst_temperature         |
+| wbb_temperature          |
+| cbb_temperature          |
+| temperature_dwr          |
+| emissivity_dwr           |
+| laser_temperature        |
+| spare_i                  |
+| spare_f                  |
+| spare_l                  |
+| spare_na                 |
+| spare_nb                 |
+| spare_nc                 |
+| spare_nd                 |
+| spare_ne                 |
+| header_end               |
+|--------------------------|
+| __init__                 |
+| _read_header             |
+| _read_new_header         |
+| _read_old_header         |
++--------------------------+
+                                                                                                                             
+                                                                                                                             
+                                                                                                                             
+                                                                                                                             
++-------------------------+       +----------------+                            +------------------------+                   
+|          DpData         |       |     DpFile     |                            |     DpMeasurement      |                   
+|-------------------------|       |----------------|                            |------------------------|                   
+| interferogram           |       | header         |  ---->  [ DpHeader ]       | cbb                    |  ---->  [ DpFile ]
+| frequency               |       | data           |  ---->  [ DpData ]         | wbb                    |                   
+| spectrum                |       | file_name      |                            | sam                    |                   
+| wavelength              |       | model          |                            | dwr                    |                   
+| average_spectrum        |       |----------------|                            | plate                  |                   
+| individual_wavelength   |       | __init__       |                            | model                  |                   
+| _interferogram_size     |       | _read_file     |                            |------------------------|                   
+| _number_of_coadds       |       | calibrate_file |                            | __init__               |                   
+| _spectrum_size          |       | check_file     |                            | _calibrate_measurement |                   
+| _dispersion_constant_xm |       +----------------+                            | check_consistency      |                   
+| _dispersion_constant_xb |                                                     +------------------------+                   
+| _largest_wavenumber     |                                                                                                  
+|-------------------------|                                                                                                  
+| __init__                |                                                                                                  
+| _read_data              |                                                                                                  
+| _read_new_data          |                                                                                                  
+| _read_old_data          |                                                                                                  
+| _calc_frequency         |                                                                                                  
+| _calc_wavelength        |                                                                                                  
++-------------------------+                                                                                                  
+
