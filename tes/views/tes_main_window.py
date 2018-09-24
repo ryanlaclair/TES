@@ -4,11 +4,7 @@ File:       tes_main_window.py
 Author:     Ryan LaClair <rgl8828@rit.edu>
 """
 
-# Try block to ensure compatibility with PyQt4 and PyQt5
-try:
-   from PyQt5 import QtWidgets, QtCore
-except ImportError:
-   from PyQt4 import QtGui as QtWidgets, QtCore
+from PyQt4 import QtGui as QtWidgets, QtCore
 
 from tes_options_view import TesOptionsView
 from ..models.gui_models.tes_gui_model import TesGuiModel

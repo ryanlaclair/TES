@@ -4,11 +4,7 @@ File:       tes_options_view.py
 Author:     Ryan LaClair <rgl8828@rit.edu>
 """
 
-# Try block to ensure compatibility with PyQt4 and PyQt5
-try:
-   from PyQt5 import QtWidgets, QtCore
-except ImportError:
-   from PyQt4 import QtGui as QtWidgets, QtCore
+from PyQt4 import QtGui as QtWidgets, QtCore
 
 class TesOptionsView(QtWidgets.QGroupBox):
     """A class that represents the options frame layout.

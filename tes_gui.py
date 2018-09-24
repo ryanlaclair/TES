@@ -1,4 +1,4 @@
-#! /usr/local/bin/python
+#! env python2
 """
 File:       tes_gui.py
 

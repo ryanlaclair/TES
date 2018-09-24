@@ -4,25 +4,14 @@ File:       radiance_plot_window.py
 Author:     Ryan LaClair <rgl8828@rit.edu>
 """
 
-# Try block to ensure compatibility with PyQt4 and PyQt5
-try:
-    from PyQt5 import QtWidgets, QtCore
-    import matplotlib
-    matplotlib.use('Qt5Agg')
-    import matplotlib.pyplot as plt
-    from matplotlib.backends.backend_qt5agg import (FigureCanvasQTAgg
-       as FigureCanvas)
-    from matplotlib.backends.backend_qt5agg import (NavigationToolbar2QT
-       as NavigationToolbar)
-except ImportError:
-    from PyQt4 import QtGui as QtWidgets, QtCore
-    import matplotlib
-    matplotlib.use('Qt4Agg')
-    import matplotlib.pyplot as plt
-    from matplotlib.backends.backend_qt4agg import (FigureCanvasQTAgg
-       as FigureCanvas)
-    from matplotlib.backends.backend_qt4agg import (NavigationToolbar2QT
-       as NavigationToolbar)
+from PyQt4 import QtGui as QtWidgets, QtCore
+import matplotlib
+matplotlib.use('Qt4Agg')
+import matplotlib.pyplot as plt
+from matplotlib.backends.backend_qt4agg import (FigureCanvasQTAgg
+    as FigureCanvas)
+from matplotlib.backends.backend_qt4agg import (NavigationToolbar2QT
+    as NavigationToolbar)
 
 class RadiancePlotWindow(QtWidgets.QWidget):
     """A class that represents a pop-up window containing a plot of the
